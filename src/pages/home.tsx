@@ -5,18 +5,19 @@ import PlayerProfile from '../components/playerProfile';
 import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';
 import { calculateAverages } from '../utils/calculateAverages';
+import type { GameLog } from '../types/GameLog';
 
 function Home() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerBio | null>(null);
 
-  const gameLogs = selectedPlayer
-    ? playerData.game_logs.filter(
-        (log) => log.playerId === selectedPlayer.playerId
-      )
+  const gameLogs: GameLog[] = selectedPlayer
+    ? playerData.game_logs
+        .filter((log) => log.playerId === selectedPlayer.playerId)
+        .map((log) => log as GameLog)
     : [];
 
-  const averages = selectedPlayer ? calculateAverages(gameLogs) : null;
+  const averages = gameLogs.length > 0 ? calculateAverages(gameLogs) : null;
 
   return (
     <div className="app-container">

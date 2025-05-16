@@ -1,11 +1,15 @@
 export interface GameLog {
-  TRB: number;
-  FT: number;
+  TRB?: number;
+  FT?: number;
+  fgPercent?: number | null;
+  tpPercent?: number | null;
+  ftPercent?: number | null;
+
   playerId: number;
   gameId: number;
   season: number;
   league: string;
-  date: string; // e.g., "2025-04-05 00:00:00"
+  date: string;
   team: string;
   teamId: number;
   opponentId: number;
@@ -19,13 +23,10 @@ export interface GameLog {
   timePlayed: string;
   fgm: number;
   fga: number;
-  fgPercent: number | null;
   tpm: number;
   tpa: number;
-  tpPercent: number | null;
   ftm: number;
   fta: number;
-  ftPercent: number | null;
   oreb: number;
   dreb: number;
   reb: number;
