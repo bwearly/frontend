@@ -1,0 +1,47 @@
+.player-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: #1e1e1e;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
+  transition: width 0.3s ease;
+  display: flex;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.player-panel.open {
+  width: 390px;
+}
+
+.player-panel.closed {
+  width: 40px; /* just the toggle rail */
+}
+
+.toggle-rail {
+  width: 40px;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: x-large;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 2;
+  border-right: 1px solid #222;
+}
+
+.scroll-wrapper {
+  overflow-y: auto;
+  height: 100%;
+  flex: 1;
+  padding: 0.5rem;
+}

@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.main-content {
+  transition: transform 0.4s ease-in-out;
+  padding: 2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.main-content.shift-left {
+  transform: translateX(-390px);
+}

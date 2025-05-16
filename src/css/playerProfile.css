@@ -1,0 +1,43 @@
+.player-profile {
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}
+
+.player-profile-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: white;
+  cursor: pointer;
+}
+
+.game-log-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.game-log-table th,
+.game-log-table td {
+  border: 1px solid #666;
+  padding: 0.4rem;
+  text-align: center;
+}
+
+.game-log-table thead {
+  background-color: #333;
+}
