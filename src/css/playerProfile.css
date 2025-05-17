@@ -13,7 +13,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
   padding: 2rem;
   text-align: left;
 }
@@ -68,7 +67,6 @@
   max-width: 1200px;
   margin-top: 0.5rem;
   border-collapse: collapse;
-  color: white;
   font-size: 0.9rem;
 }
 
