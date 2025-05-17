@@ -64,7 +64,6 @@
 
 .game-log-table {
   width: 100%;
-  color: white;
   max-width: 1200px;
   margin-top: 0.5rem;
   border-collapse: collapse;
@@ -80,6 +79,7 @@
 
 .game-log-table thead {
   background-color: #1d1d1d;
+  color: white;
 }
 
 .tool-tips {
