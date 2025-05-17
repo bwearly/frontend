@@ -64,6 +64,7 @@
 
 .game-log-table {
   width: 100%;
+  color: white;
   max-width: 1200px;
   margin-top: 0.5rem;
   border-collapse: collapse;
