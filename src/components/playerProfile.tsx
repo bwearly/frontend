@@ -25,72 +25,119 @@ function PlayerProfile({
 }: PlayerProfileProps) {
   return (
     <div className="player-profile">
-      <button className="back-button" onClick={onClose}>
-        ← Back
+      <button className="close-button" onClick={onClose}>
+        ✖
       </button>
-      <img
-        className="player-profile-img"
-        src={player.photoUrl ?? defaultImg}
-        alt={player.name}
-      />
-      <h2>{player.name}</h2>
-      <p>
-        <strong>Team:</strong> {player.currentTeam ?? 'N/A'}
-      </p>
-      <p>
-        <strong>League:</strong> {player.league ?? 'N/A'}
-      </p>
-      <p>
-        <strong>Height:</strong> {formatHeight(player.height)}
-      </p>
-      <p>
-        <strong>Weight:</strong> {player.weight} lbs
-      </p>
-      <p>
-        <strong>High School:</strong> {player.highSchool ?? 'N/A'}
-      </p>
-      <p>
-        <strong>Hometown:</strong> {player.homeTown},{' '}
-        {player.homeState ?? player.homeCountry}
-      </p>
-      <p>
-        <strong>Nationality:</strong> {player.nationality ?? 'N/A'}
-      </p>
-      <p>
-        <strong>Birth Date:</strong> {player.birthDate ?? 'N/A'}
-      </p>
+      <div className="player-header">
+        <img
+          className="player-profile-img"
+          src={player.photoUrl ?? defaultImg}
+          alt={player.name}
+        />
+        <div className="player-info-block">
+          <div className="player-name-section">
+            <h2 className="player-name-profile">{player.name}</h2>
+          </div>
+          <div className="player-details">
+            <p>
+              <strong>Team:</strong> {player.currentTeam ?? 'N/A'}
+            </p>
+            <p>
+              <strong>League:</strong> {player.league ?? 'N/A'}
+            </p>
+            <p>
+              <strong>Height:</strong> {formatHeight(player.height)}
+            </p>
+            <p>
+              <strong>Weight:</strong> {player.weight} lbs
+            </p>
+            <p>
+              <strong>Hometown:</strong> {player.homeTown},{' '}
+              {player.homeState ?? player.homeCountry}
+            </p>
+            <p>
+              <strong>Nationality:</strong>{' '}
+              {player.nationality === 'USA' ? 'American' : 'N/A'}
+            </p>
+            <p>
+              <strong>Birth Date:</strong>{' '}
+              {player.birthDate
+                ? new Date(player.birthDate).toLocaleDateString()
+                : 'N/A'}
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <h3 style={{ marginTop: '2rem' }}>Game Log</h3>
+      <h3 style={{ marginTop: '2rem' }}>Game Logs</h3>
       <table className="game-log-table">
         <thead>
           <tr>
             <th>Date</th>
-            <th>MIN</th>
-            <th>PTS</th>
-            <th>FGM</th>
-            <th>FGA</th>
-            <th>FG%</th>
-            <th>3PM</th>
-            <th>3PA</th>
-            <th>3P%</th>
-            <th>FTM</th>
-            <th>FTA</th>
-            <th>FT%</th>
-            <th>OREB</th>
-            <th>DREB</th>
-            <th>REB</th>
-            <th>AST</th>
-            <th>STL</th>
-            <th>BLK</th>
-            <th>TOV</th>
-            <th>PF</th>
+            <th className="tool-tips" title="Time Played (Minutes)">
+              MIN
+            </th>
+            <th className="tool-tips" title="Points">
+              PTS
+            </th>
+            <th className="tool-tips" title="Feild Goals Made">
+              FGM
+            </th>
+            <th className="tool-tips" title="Feild Goals Attempted">
+              FGA
+            </th>
+            <th className="tool-tips" title="Feild Goal Percentage">
+              FG%
+            </th>
+            <th className="tool-tips" title="3 Point Made">
+              3PM
+            </th>
+            <th className="tool-tips" title="3 Point Attempted">
+              3PA
+            </th>
+            <th className="tool-tips" title="3 Point Percentage">
+              3P%
+            </th>
+            <th className="tool-tips" title="Free Throw Made">
+              FTM
+            </th>
+            <th className="tool-tips" title="Free Throw Attempts">
+              FTA
+            </th>
+            <th className="tool-tips" title="Free Throw Pecentage">
+              FT%
+            </th>
+            <th className="tool-tips" title="Offensive Rebounds">
+              OREB
+            </th>
+            <th className="tool-tips" title="Defensive Rebounds">
+              DREB
+            </th>
+            <th className="tool-tips" title="Rebounds">
+              REB
+            </th>
+            <th className="tool-tips" title="Assists">
+              AST
+            </th>
+            <th className="tool-tips" title="Steals">
+              STL
+            </th>
+            <th className="tool-tips" title="Blocks">
+              BLK
+            </th>
+            <th className="tool-tips" title="Turn Over">
+              TOV
+            </th>
+            <th className="tool-tips" title="Personal Foul">
+              PF
+            </th>
           </tr>
         </thead>
         <tbody>
           {gameLogs.map((log, idx) => (
             <tr key={idx}>
               <td>{new Date(log.date).toLocaleDateString()}</td>
-              <td>{log.timePlayed}</td>
+              <td>{log.timePlayed.split(':')[0]}</td>
               <td>{log.pts}</td>
               <td>{log.fgm}</td>
               <td>{log.fga}</td>
@@ -117,7 +164,7 @@ function PlayerProfile({
               <td>
                 <strong>AVG</strong>
               </td>
-              <td>{averages.timePlayed}</td>
+              <td>{averages.timePlayed.split(':')[0]}</td>
               <td>{averages.pts}</td>
               <td>{averages.fgm}</td>
               <td>{averages.fga}</td>

@@ -27,7 +27,7 @@ function Home() {
         onSelectPlayer={setSelectedPlayer}
       />
 
-      <main className={`main-content ${isPanelOpen ? 'shift-left' : ''}`}>
+      <main className="main-content">
         {selectedPlayer ? (
           <PlayerProfile
             player={selectedPlayer}

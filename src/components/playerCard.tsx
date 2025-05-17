@@ -22,9 +22,11 @@ function PlayerCard({ player, onSelect }: PlayerCardProps) {
         alt={player.name}
       />
       <div className="player-info">
-        <h3 className="player-name">{player.name}</h3>
+        <h3 className="player-name-card">{player.name}</h3>
         <p className="player-school">{player.currentTeam ?? 'N/A'}</p>
-        <p><strong>Height:</strong> {formatHeight(player.height)}</p>
+        <p>
+          <strong>Height:</strong> {formatHeight(player.height)}
+        </p>
         <p className="player-hometown">
           <strong>Hometown:</strong> {player.homeTown},{' '}
           {player.homeState ?? player.homeCountry}

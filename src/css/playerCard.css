@@ -12,6 +12,7 @@
   max-width: 320px;
   height: 100px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .profile-picture-panel {
@@ -31,7 +32,7 @@
   overflow: hidden;
 }
 
-.player-name {
+.player-name-card {
   font-weight: bold;
   font-size: 0.95rem;
   margin: 0;
