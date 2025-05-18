@@ -85,3 +85,24 @@
 .tool-tips {
   cursor: help;
 }
+
+.scouting-report {
+  width: 100%;
+  max-width: 1000px;
+  height: 150px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  background-color: #222;
+  border: 1px solid #555;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  resize: none;
+}
+
+.section-title {
+  margin-top: 2rem;
+}
+
+.action-button {
+  margin-top: 1rem;
+}

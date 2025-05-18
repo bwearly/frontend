@@ -1,8 +1,9 @@
+import { useState, useEffect } from 'react';
 import type { PlayerBio } from '../types/PlayerBio';
 import type { GameLog } from '../types/GameLog';
+import type { GameAverages } from '../types/GameAverages';
 import '../css/playerProfile.css';
 import defaultImg from '../assets/default.png';
-import type { GameAverages } from '../types/GameAverages';
 
 const formatHeight = (inches: number) => {
   const feet = Math.floor(inches / 12);
@@ -10,10 +11,14 @@ const formatHeight = (inches: number) => {
   return `${feet}'${remainder}"`;
 };
 
+const safeDisplay = (val: number | null | undefined) =>
+  val !== null && val !== undefined ? val : '-';
+
 interface PlayerProfileProps {
   player: PlayerBio;
   gameLogs: GameLog[];
   averages: GameAverages | null;
+  report: string | null;
   onClose: () => void;
 }
 
@@ -21,13 +26,22 @@ function PlayerProfile({
   player,
   gameLogs,
   averages,
+  report,
   onClose,
 }: PlayerProfileProps) {
+  const [editableReport, setEditableReport] = useState(report ?? '');
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setEditableReport(report ?? '');
+  }, [report, player.playerId]);
+
   return (
     <div className="player-profile">
       <button className="close-button" onClick={onClose}>
         ✖
       </button>
+
       <div className="player-header">
         <img
           className="player-profile-img"
@@ -69,7 +83,7 @@ function PlayerProfile({
         </div>
       </div>
 
-      <h3 style={{ marginTop: '2rem' }}>Game Logs</h3>
+      <h3 className="section-title">Game Logs</h3>
       <table className="game-log-table">
         <thead>
           <tr>
@@ -80,13 +94,13 @@ function PlayerProfile({
             <th className="tool-tips" title="Points">
               PTS
             </th>
-            <th className="tool-tips" title="Feild Goals Made">
+            <th className="tool-tips" title="Field Goals Made">
               FGM
             </th>
-            <th className="tool-tips" title="Feild Goals Attempted">
+            <th className="tool-tips" title="Field Goals Attempted">
               FGA
             </th>
-            <th className="tool-tips" title="Feild Goal Percentage">
+            <th className="tool-tips" title="Field Goal Percentage">
               FG%
             </th>
             <th className="tool-tips" title="3 Point Made">
@@ -104,7 +118,7 @@ function PlayerProfile({
             <th className="tool-tips" title="Free Throw Attempts">
               FTA
             </th>
-            <th className="tool-tips" title="Free Throw Pecentage">
+            <th className="tool-tips" title="Free Throw Percentage">
               FT%
             </th>
             <th className="tool-tips" title="Offensive Rebounds">
@@ -141,13 +155,13 @@ function PlayerProfile({
               <td>{log.pts}</td>
               <td>{log.fgm}</td>
               <td>{log.fga}</td>
-              <td>{log.fgPercent ?? '-'}</td>
+              <td>{safeDisplay(log.fgPercent)}</td>
               <td>{log.tpm}</td>
               <td>{log.tpa}</td>
-              <td>{log.tpPercent ?? '-'}</td>
+              <td>{safeDisplay(log.tpPercent)}</td>
               <td>{log.ftm}</td>
               <td>{log.fta}</td>
-              <td>{log.ftPercent ?? '-'}</td>
+              <td>{safeDisplay(log.ftPercent)}</td>
               <td>{log.oreb}</td>
               <td>{log.dreb}</td>
               <td>{log.reb}</td>
@@ -187,6 +201,35 @@ function PlayerProfile({
           )}
         </tbody>
       </table>
+
+      <h3 className="section-title">Scouting Report</h3>
+      {isEditing ? (
+        <>
+          <textarea
+            className="scouting-report"
+            value={editableReport}
+            onChange={(e) => setEditableReport(e.target.value)}
+          />
+          <button
+            className="action-button"
+            style={{ backgroundColor: 'green', color: 'white' }}
+            onClick={() => setIsEditing(false)}
+          >
+            Save Report
+          </button>
+        </>
+      ) : (
+        <>
+          <textarea
+            className="scouting-report"
+            value={editableReport || 'No scouting report available.'}
+            readOnly
+          />
+          <button className="action-button" onClick={() => setIsEditing(true)}>
+            Edit Report
+          </button>
+        </>
+      )}
     </div>
   );
 }

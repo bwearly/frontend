@@ -11,11 +11,22 @@ function Home() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerBio | null>(null);
 
-  const gameLogs: GameLog[] = selectedPlayer
-    ? playerData.game_logs
-        .filter((log) => log.playerId === selectedPlayer.playerId)
-        .map((log) => log as GameLog)
-    : [];
+  const rawLogs = playerData.game_logs.filter(
+    (log) => log.playerId === selectedPlayer?.playerId
+  );
+
+  const gameLogs: GameLog[] = rawLogs.map((log: any) => ({
+    ...log,
+    fgPercent: log['FG%'],
+    tpPercent: log['3P%'],
+    ftPercent: log['FTP'],
+  }));
+
+  const report = selectedPlayer
+    ? playerData.scoutingReports.find(
+        (r) => r.playerId === selectedPlayer.playerId
+      )
+    : null;
 
   const averages = gameLogs.length > 0 ? calculateAverages(gameLogs) : null;
 
@@ -24,7 +35,10 @@ function Home() {
       <PlayerPanel
         isOpen={isPanelOpen}
         toggleOpen={() => setIsPanelOpen((prev) => !prev)}
-        onSelectPlayer={setSelectedPlayer}
+        onSelectPlayer={(player) => {
+          setSelectedPlayer(player);
+          setIsPanelOpen(false);
+        }}
       />
 
       <main className="main-content">
@@ -33,6 +47,7 @@ function Home() {
             player={selectedPlayer}
             gameLogs={gameLogs}
             averages={averages}
+            report={report?.report ?? null}
             onClose={() => setSelectedPlayer(null)}
           />
         ) : (

@@ -3,7 +3,6 @@
   top: 0;
   right: 0;
   height: 100%;
-  background-color: #1e1e1e;
   box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
   transition: width 0.3s ease;
   display: flex;
@@ -16,7 +15,7 @@
 }
 
 .player-panel.closed {
-  width: 40px; /* just the toggle rail */
+  width: 40px;
 }
 
 .toggle-rail {
@@ -26,7 +25,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: white;
   font-weight: bold;
   font-size: x-large;
   writing-mode: vertical-rl;
@@ -36,7 +34,6 @@
   top: 0;
   height: 100vh;
   z-index: 2;
-  border-right: 1px solid #222;
 }
 
 .scroll-wrapper {

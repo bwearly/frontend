@@ -1,4 +1,5 @@
 .player-card {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -6,7 +7,6 @@
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   border: 1px solid #555;
-  color: white;
   margin-bottom: 0.5rem;
   width: 100%;
   max-width: 320px;
@@ -55,4 +55,28 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.compare-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.compare-icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.85;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.compare-button:hover .compare-icon {
+  transform: scale(1.15);
+  opacity: 1;
 }

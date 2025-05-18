@@ -1,6 +1,11 @@
 import type { PlayerBio } from '../types/PlayerBio';
 import '../css/playerCard.css';
 import defaultImg from '../assets/default.png';
+import compareIcon from '../assets/compare.png';
+
+function handleCompareClick(player: PlayerBio) {
+  console.log('Compare triggered for:', player.name);
+}
 
 interface PlayerCardProps {
   player: PlayerBio;
@@ -31,6 +36,13 @@ function PlayerCard({ player, onSelect }: PlayerCardProps) {
           <strong>Hometown:</strong> {player.homeTown},{' '}
           {player.homeState ?? player.homeCountry}
         </p>
+        <button
+          className="compare-button"
+          onClick={() => handleCompareClick(player)}
+          title="Compare Player"
+        >
+          <img src={compareIcon} alt="Compare" className="compare-icon" />
+        </button>
       </div>
     </div>
   );
