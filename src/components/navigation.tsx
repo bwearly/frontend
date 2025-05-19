@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import '../css/Navigation.css';
+import '../css/navigation.css';
 
 export default function Navigation() {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ export default function Navigation() {
     { label: 'Stats', path: '/stats' },
     { label: 'Current Roster', path: '/currentRoster' },
     { label: 'Compare Players', path: '/compare' },
-    { label: 'Scouting Reports', path: '/scoutReports'}
+    { label: 'Scouting Reports', path: '/scoutReports' },
   ];
 
   return (
