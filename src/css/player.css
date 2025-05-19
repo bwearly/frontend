@@ -1,0 +1,49 @@
+.players-page {
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.players-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-direction: row-reverse;
+}
+
+.player-search {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #444;
+  width: 250px;
+}
+
+.players-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.player-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.player-grid.search-active .player-card {
+  justify-content: left;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 2rem;
+  font-style: italic;
+}
+
+.player-grid.align-left {
+  justify-content: flex-start;
+}

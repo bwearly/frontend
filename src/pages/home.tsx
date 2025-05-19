@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import '../App.css';
-import ScoutPanel from '../components/scoutPanel';
 import PlayerProfile from '../components/playerProfile';
 import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';

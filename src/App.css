@@ -5,7 +5,7 @@ body,
   padding: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
@@ -21,20 +21,20 @@ body,
   display: flex;
   flex-grow: 1;
   height: 100vh;
-  overflow: hidden;
 }
 
 .main-content {
   flex-grow: 1;
   padding: 2rem;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .main-content-with-bg {
   flex-grow: 1;
   padding: 2rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
   max-width: 100%;
 }
 

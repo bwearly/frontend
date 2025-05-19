@@ -15,7 +15,7 @@ const formatHeight = (inches: number) => {
   return `${feet}'${remainder}"`;
 };
 
-function PlayerTable({ onSelectPlayer }: PlayerTableProps) {
+function PlayerTable({ }: PlayerTableProps) {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const toggleExpand = (playerId: string) => {

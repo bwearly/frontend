@@ -105,8 +105,5 @@
 .scouting-name {
   cursor: pointer;
   transition: color 0.2s ease;
-}
-
-.scouting-name:hover {
   color: royalblue;
 }
