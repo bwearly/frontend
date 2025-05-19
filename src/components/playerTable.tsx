@@ -15,7 +15,7 @@ const formatHeight = (inches: number) => {
   return `${feet}'${remainder}"`;
 };
 
-function PlayerTable({ }: PlayerTableProps) {
+function PlayerTable({}: PlayerTableProps) {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const toggleExpand = (playerId: string) => {
@@ -33,11 +33,13 @@ function PlayerTable({ }: PlayerTableProps) {
             <th>RK</th>
             <th>Player</th>
             <th>School</th>
+            <th></th> {/* Arrow column */}
           </tr>
         </thead>
         <tbody>
           {players.map((player, index) => {
             const id = player.playerId.toString();
+            const isExpanded = expandedRow === id;
 
             return (
               <>
@@ -57,11 +59,14 @@ function PlayerTable({ }: PlayerTableProps) {
                     </Link>
                   </td>
                   <td>{player.currentTeam ?? 'N/A'}</td>
+                  <td style={{ textAlign: 'right', paddingRight: '1rem' }}>
+                    {isExpanded ? '▲' : '▼'}
+                  </td>
                 </tr>
 
-                {expandedRow === id && (
+                {isExpanded && (
                   <tr key={id + '-details'} className="player-details-row">
-                    <td colSpan={3}>
+                    <td colSpan={4}>
                       <div className="scouting-card">
                         <div className="scouting-left">
                           <img
@@ -79,7 +84,10 @@ function PlayerTable({ }: PlayerTableProps) {
                                 {player.name}
                               </Link>
                             </h3>
-                            <p>{formatHeight(player.height)} | {player.weight} lbs</p>
+                            <p>
+                              {formatHeight(player.height)} | {player.weight}{' '}
+                              lbs
+                            </p>
                             <p>{player.currentTeam}</p>
                           </div>
                         </div>
