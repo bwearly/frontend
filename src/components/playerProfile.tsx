@@ -119,11 +119,13 @@ function PlayerProfile({
             {combineData.handLength}" x {combineData.handWidth}"
           </div>
           <div className="label">Agility:</div>
-          <div className="value">{combineData.agility ?? '--'}</div>
+          {combineData.agility != null ? `${combineData.agility}s` : '--'}
           <div className="label">Sprint:</div>
-          <div className="value">{combineData.sprint ?? '--'}</div>
+          {combineData.sprint != null ? `${combineData.sprint}s` : '--'}
           <div className="label">Shuttle:</div>
-          <div className="value">{combineData.shuttleBest ?? '--'} </div>
+          {combineData.shuttleBest != null
+            ? `${combineData.shuttleBest}s`
+            : '--'}
         </div>
       )}
 

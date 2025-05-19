@@ -19,10 +19,10 @@
   border-radius: 6px;
   border: 1px solid #444;
   width: 250px;
+  margin-top: 1rem;
 }
 
 .players-title {
-  font-size: 2rem;
   font-weight: bold;
   margin: 0;
 }

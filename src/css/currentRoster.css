@@ -1,0 +1,35 @@
+.roster-container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.roster-header {
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+
+.mavs-roster {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mavs-roster thead {
+  background-color: #1d1d1d;
+}
+
+.mavs-roster th,
+.mavs-roster td {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.mavs-roster tbody tr:hover {
+  transition: background-color 0.2s ease-in-out;
+}
