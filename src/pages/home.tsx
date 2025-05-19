@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import '../App.css';
-import PlayerPanel from '../components/playerPanel';
+import ScoutPanel from '../components/scoutPanel';
 import PlayerProfile from '../components/playerProfile';
 import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';
 import { calculateAverages } from '../utils/calculateAverages';
 import type { GameLog } from '../types/GameLog';
+import PlayerTable from '../components/playerTable';
 
 function Home() {
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerBio | null>(null);
 
   const rawLogs = playerData.game_logs.filter(
@@ -32,35 +32,26 @@ function Home() {
 
   return (
     <div className="app-container">
-      <PlayerPanel
-        isOpen={isPanelOpen}
-        toggleOpen={() => setIsPanelOpen((prev) => !prev)}
-        onSelectPlayer={(player) => {
-          setSelectedPlayer(player);
-          setIsPanelOpen(false);
-        }}
-      />
-
-      <main className="main-content">
-        {selectedPlayer ? (
-          <PlayerProfile
-            player={selectedPlayer}
-            gameLogs={gameLogs}
-            averages={averages}
-            report={report?.report ?? null}
-            onClose={() => setSelectedPlayer(null)}
-          />
-        ) : (
-          <div className="branding">
-            <h1>Dallas Maverick Draft Board</h1>
-            <img
-              src="/dallas_mavericks.png"
-              alt="Mavs Logo"
-              className="main-logo"
-            />
+      <div className="main-area">
+        <div className="main-content-with-bg">
+          <div className="background-logo" />
+          <div className="main-content-inner">
+            <div className="branding">
+              <h1>Dallas Mavericks Draft Board</h1>
+            </div>
+            <PlayerTable onSelectPlayer={setSelectedPlayer} />
+            {selectedPlayer && (
+              <PlayerProfile
+                player={selectedPlayer}
+                gameLogs={gameLogs}
+                averages={averages}
+                report={report?.report ?? null}
+                onClose={() => setSelectedPlayer(null)}
+              />
+            )}
           </div>
-        )}
-      </main>
+        </div>
+      </div>
     </div>
   );
 }

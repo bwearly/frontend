@@ -1,12 +1,15 @@
 .close-button {
   position: absolute;
-  top: 1rem;
+  top: 0rem;
   left: 1rem;
   background: none;
   border: none;
-  font-size: 1.75rem;
-  color: red;
+  font-size: 1.25rem;
   cursor: pointer;
+}
+
+.close-button:hover {
+  transform: scale(1.1);
 }
 
 .player-profile {
@@ -104,4 +107,37 @@
 
 .action-button {
   margin-top: 1rem;
+}
+
+.combine-section-grid {
+  display: grid;
+  grid-template-columns: 200px auto 200px auto;
+  gap: 0.5rem 2rem;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.combine-section-grid .label {
+  text-align: right;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.combine-section-grid .value {
+  text-align: left;
+}
+
+.toggle-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  width: 50%;
+}
+
+.toggle-button:hover {
+  background-color: #3a3a3a;
 }

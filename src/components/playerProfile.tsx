@@ -4,6 +4,7 @@ import type { GameLog } from '../types/GameLog';
 import type { GameAverages } from '../types/GameAverages';
 import '../css/playerProfile.css';
 import defaultImg from '../assets/default.png';
+import playerData from '../api/PlayerData.json';
 
 const formatHeight = (inches: number) => {
   const feet = Math.floor(inches / 12);
@@ -31,6 +32,11 @@ function PlayerProfile({
 }: PlayerProfileProps) {
   const [editableReport, setEditableReport] = useState(report ?? '');
   const [isEditing, setIsEditing] = useState(false);
+  const [showCombineData, setShowCombineData] = useState(false);
+
+  const combineData = playerData.measurements?.find(
+    (p: any) => p.playerId === player.playerId
+  );
 
   useEffect(() => {
     setEditableReport(report ?? '');
@@ -82,6 +88,44 @@ function PlayerProfile({
           </div>
         </div>
       </div>
+
+      <button
+        className="toggle-button"
+        onClick={() => setShowCombineData(!showCombineData)}
+      >
+        {showCombineData
+          ? 'Hide Combine Measurements'
+          : 'Show Combine Measurements'}
+      </button>
+
+      {showCombineData && combineData && (
+        <div className="combine-section-grid">
+          <div className="label">Height (No Shoes):</div>
+          <div className="value">{combineData.heightNoShoes}"</div>
+          <div className="label">Height (Shoes):</div>
+          <div className="value">{combineData.heightShoes}"</div>
+          <div className="label">Wingspan:</div>
+          <div className="value">{combineData.wingspan}"</div>
+          <div className="label">Reach:</div>
+          <div className="value">{combineData.reach}"</div>
+          <div className="label">Vertical (Max):</div>
+          <div className="value">{combineData.maxVertical}"</div>
+          <div className="label">Vertical (No Step):</div>
+          <div className="value">{combineData.noStepVertical}"</div>
+          <div className="label">Weight:</div>
+          <div className="value">{combineData.weight} lbs</div>
+          <div className="label">Hand Size:</div>
+          <div className="value">
+            {combineData.handLength}" x {combineData.handWidth}"
+          </div>
+          <div className="label">Agility:</div>
+          <div className="value">{combineData.agility}s</div>
+          <div className="label">Sprint:</div>
+          <div className="value">{combineData.sprint}s</div>
+          <div className="label">Shuttle:</div>
+          <div className="value">{combineData.shuttleBest}s</div>
+        </div>
+      )}
 
       <h3 className="section-title">Game Logs</h3>
       <table className="game-log-table">

@@ -33,6 +33,7 @@
   top: 0;
   height: 100vh;
   z-index: 2;
+  border: 2px solid #555;
 }
 
 .scroll-wrapper {
@@ -40,4 +41,36 @@
   height: 100%;
   flex: 1;
   padding: 0.5rem;
+}
+
+.scout-panel {
+  width: 350px;
+  height: 100vh;
+  background-color: #1d1f2b;
+  color: white;
+  border-left: 1px solid #2a2f44;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll-wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.scouting-report {
+  width: 100%;
+  flex-grow: 1;
+  background-color: #2a2f44;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  resize: none;
 }
