@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import playerData from '../api/PlayerData.json';
-import { calculateAverages } from '../utils/CalculateAverages';
+import { calculateAverages } from '../utils/calculateAverages';
 import PlayerProfile from '../components/playerProfile';
 import type { PlayerBio } from '../types/PlayerBio';
 import type { GameLog } from '../types/GameLog';
@@ -16,7 +16,7 @@ function PlayerDetailsPage() {
       (p: PlayerBio) => p.playerId.toString() === id
     );
     if (!foundPlayer) {
-      navigate('/'); // fallback if player not found
+      navigate('/');
     } else {
       setPlayer(foundPlayer);
     }

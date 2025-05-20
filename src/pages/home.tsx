@@ -3,18 +3,16 @@ import '../App.css';
 import PlayerProfile from '../components/playerProfile';
 import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';
-import { calculateAverages } from '../utils/calculateAverages';
 import type { GameLog } from '../types/GameLog';
 import PlayerTable from '../components/playerTable';
 import { transformRawLog } from '../utils/TransformGameLogs';
+import { calculateAverages } from '../utils/calculateAverages';
 
 function Home() {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerBio | null>(null);
 
-  // Pre-transform all logs up front
   const allLogs: GameLog[] = playerData.game_logs.map(transformRawLog);
 
-  // Filter only selected player's logs
   const playerLogs = selectedPlayer
     ? allLogs.filter((log) => log.playerId === selectedPlayer.playerId)
     : [];

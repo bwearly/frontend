@@ -58,12 +58,23 @@ export function calculateAverages(gameLogs: GameLog[]): GameAverages {
   }
 
   let gs = 0;
-  let fgm = 0, fga = 0;
-  let tpm = 0, tpa = 0;
-  let ftm = 0, fta = 0;
-  let oreb = 0, dreb = 0, reb = 0;
-  let ast = 0, stl = 0, blk = 0, tov = 0, pf = 0;
-  let pts = 0, plusMinus = 0, rn = 0;
+  let fgm = 0,
+    fga = 0;
+  let tpm = 0,
+    tpa = 0;
+  let ftm = 0,
+    fta = 0;
+  let oreb = 0,
+    dreb = 0,
+    reb = 0;
+  let ast = 0,
+    stl = 0,
+    blk = 0,
+    tov = 0,
+    pf = 0;
+  let pts = 0,
+    plusMinus = 0,
+    rn = 0;
 
   const timePlayedStrings: string[] = [];
 
