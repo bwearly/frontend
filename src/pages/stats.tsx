@@ -1,6 +1,8 @@
 import '../App.css';
+import '../css/playerTable.css';
 import type { GameAverages } from '../types/GameAverages';
 import type { PlayerAverages } from '../types/PlayerAverages';
+import { Link } from 'react-router-dom';
 
 function getTop5ByStat(players: PlayerAverages[], stat: keyof GameAverages) {
   return [...players]
@@ -12,9 +14,15 @@ function getTop5ByStat(players: PlayerAverages[], stat: keyof GameAverages) {
     .slice(0, 5);
 }
 
-function formatValue(val: string | number | null | undefined): string {
+function formatValue(
+  val: string | number | null | undefined,
+  isPercent = false
+): string {
   if (val == null) return '-';
-  if (typeof val === 'number') return val.toFixed(1);
+  if (typeof val === 'number') {
+    const formatted = val.toFixed(1);
+    return isPercent ? `${formatted}%` : formatted;
+  }
   return val.toString();
 }
 
@@ -26,19 +34,8 @@ function Stats({ players }: { players: PlayerAverages[] }) {
     { title: 'BLOCKS', key: 'blk' },
     { title: 'STEALS', key: 'stl' },
     { title: 'TURNOVERS', key: 'tov' },
-    { title: 'THREE POINTERS MADE', key: 'tpm' },
-    { title: 'FREE THROWS MADE', key: 'ftm' },
+    { title: 'THREE POINTERS PERCENT', key: 'tpPercent' },
   ];
-
-  console.log(
-    'Loaded averages:',
-    players.map((p) => ({
-      name: p.name,
-      pts: p.averages.pts,
-      reb: p.averages.reb,
-      ast: p.averages.ast,
-    }))
-  );
 
   return (
     <div className="stat-leaders-grid">
@@ -48,13 +45,16 @@ function Stats({ players }: { players: PlayerAverages[] }) {
           <div key={key} className="stat-box">
             <h4>{title}</h4>
             <ol>
-              {top5.map((p, i) => (
+              {top5.map((p) => (
                 <li key={p.playerId}>
-                  <strong>
-                    {i + 1}. {p.name}
-                  </strong>{' '}
+                  <Link to={`/player/${p.playerId}`} className="scouting-name">
+                    {p.name}
+                  </Link>{' '}
                   {p.team} —{' '}
-                  {formatValue(p.averages[key as keyof GameAverages])}
+                  {formatValue(
+                    p.averages[key as keyof GameAverages],
+                    key.includes('Percent')
+                  )}
                 </li>
               ))}
             </ol>

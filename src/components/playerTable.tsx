@@ -33,7 +33,7 @@ function PlayerTable({}: PlayerTableProps) {
             <th>RK</th>
             <th>Player</th>
             <th>School</th>
-            <th></th> {/* Arrow column */}
+            <th></th>
           </tr>
         </thead>
         <tbody>
