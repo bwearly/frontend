@@ -34,16 +34,8 @@
   justify-content: center;
 }
 
-.player-grid.search-active .player-card {
-  justify-content: left;
-}
-
 .no-results {
   text-align: center;
   margin-top: 2rem;
   font-style: italic;
-}
-
-.player-grid.align-left {
-  justify-content: flex-start;
 }
