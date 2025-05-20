@@ -1,25 +1,42 @@
-import { calculateAverages } from './calculateAverages';
 import type { GameLog } from '../types/GameLog';
-import type { PlayerAverages } from '../types/PlayerAverages';
+import playerData from '../api/PlayerData.json';
 
-function groupLogsByPlayer(
-  allLogs: GameLog[],
-  nameMap: Record<string, string>
-): PlayerAverages[] {
-  const playerMap: Record<string, GameLog[]> = {};
+export default function groupLogsByPlayer(logs: GameLog[]) {
+  const nameMap: Record<number, { name: string; team: string }> = {};
+  for (const bio of playerData.bio) {
+    nameMap[bio.playerId] = {
+      name: bio.name,
+      team: bio.currentTeam ?? '',
+    };
+  }
 
-  allLogs.forEach((log) => {
-    if (!playerMap[log.playerId]) {
-      playerMap[log.playerId] = [];
-    }
-    playerMap[log.playerId].push(log);
-  });
+  const players: {
+    playerId: number;
+    name: string;
+    team: string;
+    logs: GameLog[];
+  }[] = [];
 
-  return Object.entries(playerMap).map(([playerId, logs]) => ({
-    playerId,
-    name: nameMap[playerId] ?? 'Unknown',
-    averages: calculateAverages(logs),
-  }));
+  const grouped = logs.reduce(
+    (acc, log) => {
+      if (!acc[log.playerId]) {
+        acc[log.playerId] = [];
+      }
+      acc[log.playerId].push(log);
+      return acc;
+    },
+    {} as Record<number, GameLog[]>
+  );
+
+  for (const playerId in grouped) {
+    const id = parseInt(playerId, 10);
+    players.push({
+      playerId: id,
+      name: nameMap[id]?.name ?? 'Unknown',
+      team: nameMap[id]?.team ?? '',
+      logs: grouped[id],
+    });
+  }
+
+  return players;
 }
-
-export default groupLogsByPlayer;

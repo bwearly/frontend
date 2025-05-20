@@ -6,20 +6,18 @@ import playerData from '../api/PlayerData.json';
 import { calculateAverages } from '../utils/calculateAverages';
 import type { GameLog } from '../types/GameLog';
 import PlayerTable from '../components/playerTable';
+import { transformRawLog } from '../utils/TransformGameLogs';
 
 function Home() {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerBio | null>(null);
 
-  const rawLogs = playerData.game_logs.filter(
-    (log) => log.playerId === selectedPlayer?.playerId
-  );
+  // Pre-transform all logs up front
+  const allLogs: GameLog[] = playerData.game_logs.map(transformRawLog);
 
-  const gameLogs: GameLog[] = rawLogs.map((log: any) => ({
-    ...log,
-    fgPercent: log['FG%'],
-    tpPercent: log['3P%'],
-    ftPercent: log['FTP'],
-  }));
+  // Filter only selected player's logs
+  const playerLogs = selectedPlayer
+    ? allLogs.filter((log) => log.playerId === selectedPlayer.playerId)
+    : [];
 
   const report = selectedPlayer
     ? playerData.scoutingReports.find(
@@ -27,7 +25,7 @@ function Home() {
       )
     : null;
 
-  const averages = gameLogs.length > 0 ? calculateAverages(gameLogs) : null;
+  const averages = playerLogs.length > 0 ? calculateAverages(playerLogs) : null;
 
   return (
     <div className="app-container">
@@ -42,7 +40,7 @@ function Home() {
             {selectedPlayer && (
               <PlayerProfile
                 player={selectedPlayer}
-                gameLogs={gameLogs}
+                gameLogs={playerLogs}
                 averages={averages}
                 report={report?.report ?? null}
                 onClose={() => setSelectedPlayer(null)}

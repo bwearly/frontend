@@ -1,3 +1,4 @@
+// --- playerProfile.tsx ---
 import { useState, useEffect } from 'react';
 import type { PlayerBio } from '../types/PlayerBio';
 import type { GameLog } from '../types/GameLog';
@@ -12,12 +13,15 @@ const formatHeight = (inches: number) => {
   return `${feet}'${remainder}"`;
 };
 
-const safeDisplay = (val: number | null | undefined) =>
-  val !== null && val !== undefined ? val : '-';
+const formatPercent = (made: number, attempts: number) => {
+  if (attempts === 0) return '-';
+  const percent = (made / attempts) * 100;
+  return `${percent.toFixed(1)}%`;
+};
 
 interface PlayerProfileProps {
   player: PlayerBio;
-  gameLogs: GameLog[];
+  gameLogs: GameLog[]; // ✅ Already transformed
   averages: GameAverages | null;
   report: string | null;
   onClose: () => void;
@@ -119,13 +123,19 @@ function PlayerProfile({
             {combineData.handLength}" x {combineData.handWidth}"
           </div>
           <div className="label">Agility:</div>
-          {combineData.agility != null ? `${combineData.agility}s` : '--'}
+          <div className="value">
+            {combineData.agility != null ? `${combineData.agility}s` : '--'}
+          </div>
           <div className="label">Sprint:</div>
-          {combineData.sprint != null ? `${combineData.sprint}s` : '--'}
+          <div className="value">
+            {combineData.sprint != null ? `${combineData.sprint}s` : '--'}
+          </div>
           <div className="label">Shuttle:</div>
-          {combineData.shuttleBest != null
-            ? `${combineData.shuttleBest}s`
-            : '--'}
+          <div className="value">
+            {combineData.shuttleBest != null
+              ? `${combineData.shuttleBest}s`
+              : '--'}
+          </div>
         </div>
       )}
 
@@ -134,80 +144,46 @@ function PlayerProfile({
         <thead>
           <tr>
             <th>Date</th>
-            <th className="tool-tips" title="Time Played (Minutes)">
-              MIN
-            </th>
-            <th className="tool-tips" title="Points">
-              PTS
-            </th>
-            <th className="tool-tips" title="Field Goals Made">
-              FGM
-            </th>
-            <th className="tool-tips" title="Field Goals Attempted">
-              FGA
-            </th>
-            <th className="tool-tips" title="Field Goal Percentage">
-              FG%
-            </th>
-            <th className="tool-tips" title="3 Point Made">
-              3PM
-            </th>
-            <th className="tool-tips" title="3 Point Attempted">
-              3PA
-            </th>
-            <th className="tool-tips" title="3 Point Percentage">
-              3P%
-            </th>
-            <th className="tool-tips" title="Free Throw Made">
-              FTM
-            </th>
-            <th className="tool-tips" title="Free Throw Attempts">
-              FTA
-            </th>
-            <th className="tool-tips" title="Free Throw Percentage">
-              FT%
-            </th>
-            <th className="tool-tips" title="Offensive Rebounds">
-              OREB
-            </th>
-            <th className="tool-tips" title="Defensive Rebounds">
-              DREB
-            </th>
-            <th className="tool-tips" title="Rebounds">
-              REB
-            </th>
-            <th className="tool-tips" title="Assists">
-              AST
-            </th>
-            <th className="tool-tips" title="Steals">
-              STL
-            </th>
-            <th className="tool-tips" title="Blocks">
-              BLK
-            </th>
-            <th className="tool-tips" title="Turn Over">
-              TOV
-            </th>
-            <th className="tool-tips" title="Personal Foul">
-              PF
-            </th>
+            <th>MIN</th>
+            <th>PTS</th>
+            <th>FGM</th>
+            <th>FGA</th>
+            <th>FG%</th>
+            <th>3PM</th>
+            <th>3PA</th>
+            <th>3P%</th>
+            <th>FTM</th>
+            <th>FTA</th>
+            <th>FT%</th>
+            <th>OREB</th>
+            <th>DREB</th>
+            <th>REB</th>
+            <th>AST</th>
+            <th>STL</th>
+            <th>BLK</th>
+            <th>TOV</th>
+            <th>PF</th>
           </tr>
         </thead>
         <tbody>
           {gameLogs.map((log, idx) => (
             <tr key={idx}>
-              <td>{new Date(log.date).toLocaleDateString()}</td>
-              <td>{log.timePlayed.split(':')[0]}</td>
+              <td>
+                {log.date
+                  ? new Date(log.date).toLocaleDateString()
+                  : `Game ${idx + 1}`}
+              </td>
+              <td>{log.timePlayed?.split(':')[0]}</td>
               <td>{log.pts}</td>
               <td>{log.fgm}</td>
               <td>{log.fga}</td>
-              <td>{safeDisplay(log.fgPercent)}</td>
+              <td>{formatPercent(log.fgm, log.fga)}</td>
               <td>{log.tpm}</td>
               <td>{log.tpa}</td>
-              <td>{safeDisplay(log.tpPercent)}</td>
+              <td>{formatPercent(log.tpm, log.tpa)}</td>
               <td>{log.ftm}</td>
               <td>{log.fta}</td>
-              <td>{safeDisplay(log.ftPercent)}</td>
+              <td>{formatPercent(log.ftm, log.fta)}</td>
               <td>{log.oreb}</td>
               <td>{log.dreb}</td>
               <td>{log.reb}</td>
@@ -228,13 +204,19 @@ function PlayerProfile({
               <td>{averages.pts}</td>
               <td>{averages.fgm}</td>
               <td>{averages.fga}</td>
-              <td>{averages.fgPercent ?? '-'}</td>
+              <td>
+                {averages.fgPercent != null ? `${averages.fgPercent}%` : '-'}
+              </td>
               <td>{averages.tpm}</td>
               <td>{averages.tpa}</td>
-              <td>{averages.tpPercent ?? '-'}</td>
+              <td>
+                {averages.tpPercent != null ? `${averages.tpPercent}%` : '-'}
+              </td>
               <td>{averages.ftm}</td>
               <td>{averages.fta}</td>
-              <td>{averages.ftPercent ?? '-'}</td>
+              <td>
+                {averages.ftPercent != null ? `${averages.ftPercent}%` : '-'}
+              </td>
               <td>{averages.oreb}</td>
               <td>{averages.dreb}</td>
               <td>{averages.reb}</td>

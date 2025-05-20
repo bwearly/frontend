@@ -4,8 +4,18 @@ import type { PlayerAverages } from '../types/PlayerAverages';
 
 function getTop5ByStat(players: PlayerAverages[], stat: keyof GameAverages) {
   return [...players]
+    .filter((p) => {
+      const val = p.averages[stat];
+      return typeof val === 'number' && !isNaN(val);
+    })
     .sort((a, b) => (b.averages[stat] as number) - (a.averages[stat] as number))
     .slice(0, 5);
+}
+
+function formatValue(val: string | number | null | undefined): string {
+  if (val == null) return '-';
+  if (typeof val === 'number') return val.toFixed(1);
+  return val.toString();
 }
 
 function Stats({ players }: { players: PlayerAverages[] }) {
@@ -20,6 +30,16 @@ function Stats({ players }: { players: PlayerAverages[] }) {
     { title: 'FREE THROWS MADE', key: 'ftm' },
   ];
 
+  console.log(
+    'Loaded averages:',
+    players.map((p) => ({
+      name: p.name,
+      pts: p.averages.pts,
+      reb: p.averages.reb,
+      ast: p.averages.ast,
+    }))
+  );
+
   return (
     <div className="stat-leaders-grid">
       {statCategories.map(({ title, key }) => {
@@ -29,11 +49,12 @@ function Stats({ players }: { players: PlayerAverages[] }) {
             <h4>{title}</h4>
             <ol>
               {top5.map((p, i) => (
-                <li key={i}>
+                <li key={p.playerId}>
                   <strong>
                     {i + 1}. {p.name}
                   </strong>{' '}
-                  {p.team} — {p.averages[key as keyof GameAverages]}
+                  {p.team} —{' '}
+                  {formatValue(p.averages[key as keyof GameAverages])}
                 </li>
               ))}
             </ol>

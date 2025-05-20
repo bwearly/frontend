@@ -1,7 +1,7 @@
 import type { GameAverages } from './GameAverages';
 
 export interface PlayerAverages {
-  playerId: string;
+  playerId: number;
   name: string;
   team?: string;
   averages: GameAverages;

@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import playerData from '../api/PlayerData.json';
-import { calculateAverages } from '../utils/calculateAverages';
+import { calculateAverages } from '../utils/CalculateAverages';
 import PlayerProfile from '../components/playerProfile';
 import type { PlayerBio } from '../types/PlayerBio';
 import type { GameLog } from '../types/GameLog';
