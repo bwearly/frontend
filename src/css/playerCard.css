@@ -5,7 +5,6 @@
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  border: 1px solid #555;
   margin-bottom: 0.5rem;
   width: 100%;
   max-width: 320px;
@@ -78,4 +77,61 @@
 .compare-button:hover .compare-icon {
   transform: scale(1.15);
   opacity: 1;
+}
+
+.large-player-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  max-width: 320px;
+  height: 100px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.large-profile-picture-panel {
+  width: 80px;
+  height: 100px;
+  border-radius: 15%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.large-player-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+.large-player-name-card {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.large-player-school {
+  font-style: italic;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.large-player-hometown {
+  font-style: italic;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

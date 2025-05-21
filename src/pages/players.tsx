@@ -5,6 +5,12 @@ import defaultImg from '../assets/default.png';
 import '../css/playerCard.css';
 import '../css/player.css';
 
+const formatHeight = (inches: number) => {
+  const feet = Math.floor(inches / 12);
+  const remainder = inches % 12;
+  return `${feet}'${remainder}"`;
+};
+
 function Players() {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -33,18 +39,20 @@ function Players() {
               <Link
                 key={player.playerId}
                 to={`/player/${player.playerId}`}
-                className="player-card"
+                className="large-player-card"
               >
                 <img
-                  className="profile-picture-panel"
+                  className="large-profile-picture-panel"
                   src={player.photoUrl ?? defaultImg}
                   alt={player.name}
                 />
-                <div className="player-info">
-                  <h3 className="player-name-card">{player.name}</h3>
-                  <p className="player-school">{player.currentTeam ?? 'N/A'}</p>
-                  <p className="player-hometown">
-                    {player.homeTown}, {player.homeState ?? player.homeCountry}
+                <div className="large-player-info">
+                  <h3 className="large-player-name-card">{player.name}</h3>
+                  <p className="large-player-school">
+                    {player.currentTeam ?? 'N/A'}
+                  </p>
+                  <p className="large-player-hometown">
+                    {formatHeight(player.height)} | {player.weight} lbs
                   </p>
                 </div>
               </Link>
