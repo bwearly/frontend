@@ -20,7 +20,7 @@ const SalaryCard = () => {
 
   return (
     <div className="salary-card">
-      <h3>Progress Toward NBA Cap Thresholds</h3>
+      <h2>NBA Cap Thresholds</h2>
       <div className="bar-chart">
         {thresholds.map((t) => {
           const percent = Math.min((teamSalary / t.value) * 100, 100);

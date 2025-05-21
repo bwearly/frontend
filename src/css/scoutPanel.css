@@ -27,20 +27,19 @@
 }
 
 .arrow-btn {
-  background: #eee;
   border: none;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   cursor: pointer;
+  font-size: x-large;
+  font-weight: bolder;
 }
 
 .arrow-btn.green {
-  background: #d1f5d1;
   color: green;
 }
 
 .arrow-btn.red {
-  background: #fddddd;
   color: red;
 }
 

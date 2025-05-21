@@ -71,7 +71,7 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
 
   return (
     <div className="scouting-panel">
-      <h4>Scouting Priority</h4>
+      <h2>Scouting Priority</h2>
       {playerList.map((player, index) => {
         const offset = getMoveOffset(player.playerId, index);
         return (
@@ -81,7 +81,7 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
                 <Link
                   to={`/player/${player.playerId}`}
                   className="scouting-name"
-                  onClick={(e) => e.stopPropagation()} // so it doesn't trigger a panel toggle or drag
+                  onClick={(e) => e.stopPropagation()}
                 >
                   {player.name}
                 </Link>
@@ -93,13 +93,13 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
                 className={`arrow-btn ${moveDirection[player.playerId] === 'up' ? 'green' : ''}`}
                 onClick={() => movePlayer(index, 'up')}
               >
-                ▲
+                ⬆
               </button>
               <button
                 className={`arrow-btn ${moveDirection[player.playerId] === 'down' ? 'red' : ''}`}
                 onClick={() => movePlayer(index, 'down')}
               >
-                ▼
+                ⬇
               </button>
               {offset && <span className="move-count">{offset}</span>}
             </div>
