@@ -10,6 +10,7 @@ import { calculateAverages } from '../utils/calculateAverages';
 import groupLogsByPlayer from '../utils/GroupLogsByPlayers';
 import StatCard from '../components/statsCard';
 import SalaryCard from '../components/salaryCard';
+import ScoutPanel from '../components/scoutPanel';
 
 function Home() {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerBio | null>(null);
@@ -39,29 +40,44 @@ function Home() {
     averages: calculateAverages(p.logs),
   }));
 
+  const playersWithReports = playerData.bio
+    .filter((p) =>
+      playerData.scoutingReports.some((r) => r.playerId === p.playerId)
+    )
+    .map((p) => ({
+      playerId: p.playerId.toString(),
+      name: `${p.firstName} ${p.lastName}`,
+      team: p.currentTeam ?? 'N/A',
+    }));
+
   return (
-    <div className="app-container">
-      <div className="main-area">
-        <div className="main-content-with-bg">
-          <div className="background-logo" />
-          <div className="main-content-inner">
-            <div className="branding">
-              <h1>Dallas Mavericks Draft Board</h1>
+    <div className="main-content-with-bg">
+      <div className="background-logo" />
+      <div className="branding">
+        <h1>Dallas Mavericks Draft Board</h1>
+      </div>
+      <div className="main-content-inner">
+        <div className="main-content-wrapper">
+          <div className="main-content-body">
+            <div className="left-column">
+              <PlayerTable onSelectPlayer={setSelectedPlayer} />
+              {selectedPlayer && (
+                <PlayerProfile
+                  player={selectedPlayer}
+                  gameLogs={playerLogs}
+                  averages={averages}
+                  report={report?.report ?? null}
+                  onClose={() => setSelectedPlayer(null)}
+                />
+              )}
+              <div className="stat-salary-wrapper">
+                <StatCard players={players} />
+                <SalaryCard />
+              </div>
             </div>
-            <PlayerTable onSelectPlayer={setSelectedPlayer} />
-            {selectedPlayer && (
-              <PlayerProfile
-                player={selectedPlayer}
-                gameLogs={playerLogs}
-                averages={averages}
-                report={report?.report ?? null}
-                onClose={() => setSelectedPlayer(null)}
-              />
-            )}
-            <div className="stat-salary-wrapper">
-              <StatCard players={players} />
-              <SalaryCard />
-            </div>
+          </div>
+          <div className="scout-panel-container">
+            <ScoutPanel playersWithReports={playersWithReports} />
           </div>
         </div>
       </div>

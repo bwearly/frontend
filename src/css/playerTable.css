@@ -3,15 +3,8 @@
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  width: 75%;
-
-  max-height: 200px;
+  max-height: 330px;
   overflow-y: auto;
-}
-
-.player-table-card.expanded {
-  max-height: 260px;
-  padding-bottom: 40px;
 }
 
 .player-table {

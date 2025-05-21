@@ -1,4 +1,3 @@
-// --- playerProfile.tsx ---
 import { useState, useEffect } from 'react';
 import type { PlayerBio } from '../types/PlayerBio';
 import type { GameLog } from '../types/GameLog';
@@ -21,7 +20,7 @@ const formatPercent = (made: number, attempts: number) => {
 
 interface PlayerProfileProps {
   player: PlayerBio;
-  gameLogs: GameLog[]; // ✅ Already transformed
+  gameLogs: GameLog[];
   averages: GameAverages | null;
   report: string | null;
   onClose: () => void;
