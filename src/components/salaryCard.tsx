@@ -1,4 +1,4 @@
-import '../css/SalaryCard.css';
+import '../css/salaryCard.css';
 import { useNavigate } from 'react-router-dom';
 
 const salaryCap = 154600000;
