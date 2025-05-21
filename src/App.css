@@ -92,3 +92,19 @@ body,
   transform: translateX(-390px);
   transition: transform 0.4s ease-in-out;
 }
+
+.stat-salary-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.stat-card,
+.salary-card {
+  flex: 1;
+  min-width: 300px;
+  max-width: 40%;
+  min-height: 246px;
+}

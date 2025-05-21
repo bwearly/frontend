@@ -7,6 +7,9 @@ import type { GameLog } from '../types/GameLog';
 import PlayerTable from '../components/playerTable';
 import { transformRawLog } from '../utils/TransformGameLogs';
 import { calculateAverages } from '../utils/calculateAverages';
+import groupLogsByPlayer from '../utils/GroupLogsByPlayers';
+import StatCard from '../components/statsCard';
+import SalaryCard from '../components/salaryCard';
 
 function Home() {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerBio | null>(null);
@@ -24,6 +27,17 @@ function Home() {
     : null;
 
   const averages = playerLogs.length > 0 ? calculateAverages(playerLogs) : null;
+
+  const rawLogs = playerData.game_logs.map(transformRawLog);
+
+  const grouped = groupLogsByPlayer(rawLogs);
+
+  const players = grouped.map((p) => ({
+    playerId: p.playerId,
+    name: p.name,
+    team: p.team,
+    averages: calculateAverages(p.logs),
+  }));
 
   return (
     <div className="app-container">
@@ -44,6 +58,10 @@ function Home() {
                 onClose={() => setSelectedPlayer(null)}
               />
             )}
+            <div className="stat-salary-wrapper">
+              <StatCard players={players} />
+              <SalaryCard />
+            </div>
           </div>
         </div>
       </div>

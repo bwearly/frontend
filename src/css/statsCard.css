@@ -1,0 +1,31 @@
+.stat-card {
+  padding: 1rem;
+  border-radius: 12px;
+  width: 240px;
+  font-family: sans-serif;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card select {
+  font-size: 0.9rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.stat-card-list {
+  list-style: decimal inside;
+  padding-left: 0;
+}
+
+.stat-card-list li {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
