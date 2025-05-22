@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/scoutPanel.css';
 
 interface Player {
@@ -14,6 +14,21 @@ interface Props {
 
 export default function ScoutingPanel({ playersWithReports }: Props) {
   const [playerList, setPlayerList] = useState(playersWithReports);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          element.classList.add('highlight-scroll');
+          setTimeout(() => element.classList.remove('highlight-scroll'), 1500);
+        }
+      }, 100);
+    }
+  }, []);
 
   const [originalIndexes, setOriginalIndexes] = useState<
     Record<string, number>
@@ -33,16 +48,13 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
   const movePlayer = (index: number, direction: 'up' | 'down') => {
     const newList = [...playerList];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
-
     if (targetIndex < 0 || targetIndex >= newList.length) return;
 
-    // Swap players
     const movingPlayer = newList[index];
     const bumpedPlayer = newList[targetIndex];
     [newList[index], newList[targetIndex]] = [bumpedPlayer, movingPlayer];
     setPlayerList(newList);
 
-    // Determine movement directions based on original indexes
     const getDir = (
       playerId: string,
       newIndex: number
@@ -64,7 +76,6 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
   const getMoveOffset = (playerId: string, currentIndex: number) => {
     const originalIndex = originalIndexes[playerId];
     if (originalIndex === undefined) return null;
-
     const diff = Math.abs(originalIndex - currentIndex);
     return diff > 0 ? diff : null;
   };
@@ -75,7 +86,13 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
       {playerList.map((player, index) => {
         const offset = getMoveOffset(player.playerId, index);
         return (
-          <div className="scout-card" key={player.playerId}>
+          <div
+            className="scout-card"
+            key={player.playerId}
+            id={`player-${player.playerId}`}
+            onClick={() => navigate(`/scoutReports#player-${player.playerId}`)}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="scout-info">
               <strong>
                 <Link
@@ -91,13 +108,19 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
             <div className="scout-actions">
               <button
                 className={`arrow-btn ${moveDirection[player.playerId] === 'up' ? 'green' : ''}`}
-                onClick={() => movePlayer(index, 'up')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  movePlayer(index, 'up');
+                }}
               >
                 ⬆
               </button>
               <button
                 className={`arrow-btn ${moveDirection[player.playerId] === 'down' ? 'red' : ''}`}
-                onClick={() => movePlayer(index, 'down')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  movePlayer(index, 'down');
+                }}
               >
                 ⬇
               </button>

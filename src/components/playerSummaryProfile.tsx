@@ -32,7 +32,7 @@ function PlayerSummaryProfile({ player, gameLogs, averages }: Props) {
 
   return (
     <div className="player-summary-profile player-summary">
-      <div className="player-header">
+      <div className="player-summary-header">
         <img
           className="player-profile-img"
           src={player.photoUrl ?? defaultImg}
@@ -54,7 +54,7 @@ function PlayerSummaryProfile({ player, gameLogs, averages }: Props) {
               <strong>Weight:</strong> {player.weight} lbs
             </p>
             <p>
-              <strong>Hometown:</strong> {player.homeTown},{' '}
+              <strong>Hometown:</strong> {player.homeTown},
               {player.homeState ?? player.homeCountry}
             </p>
             <p>

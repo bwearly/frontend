@@ -98,3 +98,15 @@
   transition: color 0.2s ease;
   color: royalblue;
 }
+
+.scouting-report-card {
+  display: flex;
+  gap: 32px;
+  margin: 2rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  padding: 24px 32px;
+  border-radius: 12px;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
