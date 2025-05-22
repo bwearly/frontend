@@ -4,6 +4,8 @@ import type { GameAverages } from '../types/GameAverages';
 import type { PlayerAverages } from '../types/PlayerAverages';
 import '../css/statsCard.css';
 
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+
 interface StatCardProps {
   players: PlayerAverages[];
 }
@@ -50,21 +52,49 @@ export default function StatCard({ players }: StatCardProps) {
     <div className="stat-card">
       <div className="stat-card-header">
         <h2>{selectedStat.title} Leaders</h2>
-        <select
-          className="form-control"
-          value={selectedStat.key}
-          onChange={(e) =>
-            setSelectedStat(
-              statCategories.find((s) => s.key === e.target.value)!
-            )
-          }
-        >
-          {statCategories.map((stat) => (
-            <option key={stat.key} value={stat.key}>
-              {stat.title}
-            </option>
-          ))}
-        </select>
+
+        <FormControl variant="standard" sx={{ minWidth: 160 }}>
+          <InputLabel
+            id="stat-select-label"
+            sx={{
+              color: 'gray',
+              fontWeight: 500,
+            }}
+          >
+            Stat Options
+          </InputLabel>
+
+          <Select
+            labelId="stat-select-label"
+            value={selectedStat.key}
+            onChange={(e) =>
+              setSelectedStat(
+                statCategories.find((s) => s.key === e.target.value)!
+              )
+            }
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              borderRadius: '6px',
+              padding: '0.5rem 1rem',
+              fontSize: '1rem',
+              border: '1px solid #444',
+
+              '&:hover': {
+                backgroundColor: '#f9f9f9',
+              },
+              '& .MuiSelect-icon': {
+                color: 'black',
+              },
+            }}
+          >
+            {statCategories.map((stat) => (
+              <MenuItem key={stat.key} value={stat.key}>
+                {stat.title}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
 
       <ol className="stat-card-list">

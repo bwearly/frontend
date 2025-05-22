@@ -1,5 +1,6 @@
 import '../css/salaryCard.css';
 import { useNavigate } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
 
 const salaryCap = 154600000;
 const luxuryTax = 187900000;
@@ -33,20 +34,23 @@ const SalaryCard = () => {
               onClick={() => navigate('/currentRoster')}
             >
               <div className="bar-label">{t.label}</div>
-              <div className="bar-track" title={tooltip}>
-                <div
-                  className="bar-fill"
-                  style={{
-                    width: `${percent}%`,
-                    backgroundColor:
-                      percent >= 100
-                        ? '#e74c3c'
-                        : percent >= 95
-                          ? '#f1c40f'
-                          : '#3cb371',
-                  }}
-                />
-              </div>
+
+              <Tooltip title={tooltip} arrow placement="top">
+                <div className="bar-track">
+                  <div
+                    className="bar-fill"
+                    style={{
+                      width: `${percent}%`,
+                      backgroundColor:
+                        percent >= 100
+                          ? '#e74c3c'
+                          : percent >= 95
+                            ? '#f1c40f'
+                            : '#3cb371',
+                    }}
+                  />
+                </div>
+              </Tooltip>
             </div>
           );
         })}
