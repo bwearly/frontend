@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/scoutPanel.css';
+import IconButton from '@mui/material/IconButton';
+import ArrowUpward from '@mui/icons-material/ArrowUpward';
+import ArrowDownward from '@mui/icons-material/ArrowDownward';
 
 interface Player {
   playerId: string;
@@ -106,24 +109,34 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
               <span>{player.team}</span>
             </div>
             <div className="scout-actions">
-              <button
-                className={`arrow-btn ${moveDirection[player.playerId] === 'up' ? 'green' : ''}`}
+              <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
                   movePlayer(index, 'up');
                 }}
+                style={{
+                  color:
+                    moveDirection[player.playerId] === 'up'
+                      ? 'green'
+                      : undefined,
+                }}
               >
-                ⬆
-              </button>
-              <button
-                className={`arrow-btn ${moveDirection[player.playerId] === 'down' ? 'red' : ''}`}
+                <ArrowUpward />
+              </IconButton>
+              <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
                   movePlayer(index, 'down');
                 }}
+                style={{
+                  color:
+                    moveDirection[player.playerId] === 'down'
+                      ? 'red'
+                      : undefined,
+                }}
               >
-                ⬇
-              </button>
+                <ArrowDownward />
+              </IconButton>
               {offset && <span className="move-count">{offset}</span>}
             </div>
           </div>

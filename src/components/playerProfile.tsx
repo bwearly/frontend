@@ -5,6 +5,7 @@ import type { GameAverages } from '../types/GameAverages';
 import '../css/playerProfile.css';
 import defaultImg from '../assets/default.png';
 import playerData from '../api/PlayerData.json';
+import Tooltip from '@mui/material/Tooltip';
 
 const formatHeight = (inches: number) => {
   const feet = Math.floor(inches / 12);
@@ -143,62 +144,100 @@ function PlayerProfile({
         <thead>
           <tr>
             <th>Date</th>
-            <th title="Time Played (Minutes)" className="tool-tips">
-              MIN
+            <th className="tool-tips">
+              <Tooltip title="Time Played (Minutes)" arrow>
+                <span>MIN</span>
+              </Tooltip>
             </th>
-            <th title="Points" className="tool-tips">
-              PTS
+            <th className="tool-tips">
+              <Tooltip title="Points" arrow>
+                <span>PTS</span>
+              </Tooltip>
             </th>
-            <th title="Feild Goals Made" className="tool-tips">
-              FGM
+            <th className="tool-tips">
+              <Tooltip title="Field Goals Made" arrow>
+                <span>FGM</span>
+              </Tooltip>
             </th>
-            <th title="Feild Goal Attempts" className="tool-tips">
-              FGA
+            <th className="tool-tips">
+              <Tooltip title="Field Goal Attempts" arrow>
+                <span>FGA</span>
+              </Tooltip>
             </th>
-            <th title="Feild Goal Percent" className="tool-tips">
-              FG%
+            <th className="tool-tips">
+              <Tooltip title="Field Goal Percent" arrow>
+                <span>FG%</span>
+              </Tooltip>
             </th>
-            <th title="3 Points Made" className="tool-tips">
-              3PM
+            <th className="tool-tips">
+              <Tooltip title="3 Points Made" arrow>
+                <span>3PM</span>
+              </Tooltip>
             </th>
-            <th title="3 Point Attempts" className="tool-tips">
-              3PA
+            <th className="tool-tips">
+              <Tooltip title="3 Point Attempts" arrow>
+                <span>3PA</span>
+              </Tooltip>
             </th>
-            <th title="3 Point Percent" className="tool-tips">
-              3P%
+            <th className="tool-tips">
+              <Tooltip title="3 Point Percent" arrow>
+                <span>3P%</span>
+              </Tooltip>
             </th>
-            <th title="Free Throws Made" className="tool-tips">
-              FTM
+            <th className="tool-tips">
+              <Tooltip title="Free Throws Made" arrow>
+                <span>FTM</span>
+              </Tooltip>
             </th>
-            <th title="Free Throw Attempts" className="tool-tips">
-              FTA
+            <th className="tool-tips">
+              <Tooltip title="Free Throw Attempts" arrow>
+                <span>FTA</span>
+              </Tooltip>
             </th>
-            <th title="Free Throw Percent" className="tool-tips">
-              FT%
+            <th className="tool-tips">
+              <Tooltip title="Free Throw Percent" arrow>
+                <span>FT%</span>
+              </Tooltip>
             </th>
-            <th title="Offensive Rebounds" className="tool-tips">
-              OREB
+            <th className="tool-tips">
+              <Tooltip title="Offensive Rebounds" arrow>
+                <span>OREB</span>
+              </Tooltip>
             </th>
-            <th title="Defensive Rebounds" className="tool-tips">
-              DREB
+            <th className="tool-tips">
+              <Tooltip title="Defensive Rebounds" arrow>
+                <span>DREB</span>
+              </Tooltip>
             </th>
-            <th title="Rebounds" className="tool-tips">
-              REB
+            <th className="tool-tips">
+              <Tooltip title="Rebounds" arrow>
+                <span>REB</span>
+              </Tooltip>
             </th>
-            <th title="Assists" className="tool-tips">
-              AST
+            <th className="tool-tips">
+              <Tooltip title="Assists" arrow>
+                <span>AST</span>
+              </Tooltip>
             </th>
-            <th title="Steals" className="tool-tips">
-              STL
+            <th className="tool-tips">
+              <Tooltip title="Steals" arrow>
+                <span>STL</span>
+              </Tooltip>
             </th>
-            <th title="Blocks" className="tool-tips">
-              BLK
+            <th className="tool-tips">
+              <Tooltip title="Blocks" arrow>
+                <span>BLK</span>
+              </Tooltip>
             </th>
-            <th title="Turn Overs" className="tool-tips">
-              TOV
+            <th className="tool-tips">
+              <Tooltip title="Turnovers" arrow>
+                <span>TOV</span>
+              </Tooltip>
             </th>
-            <th title="Personal Fouls" className="tool-tips">
-              PF
+            <th className="tool-tips">
+              <Tooltip title="Personal Fouls" arrow>
+                <span>PF</span>
+              </Tooltip>
             </th>
           </tr>
         </thead>

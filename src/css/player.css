@@ -13,7 +13,7 @@
   flex-direction: row-reverse;
 }
 
-.player-search {
+.player-search input {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border-radius: 6px;

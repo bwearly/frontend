@@ -5,6 +5,8 @@ import defaultImg from '../assets/default.png';
 import '../css/playerCard.css';
 import '../css/player.css';
 
+import { Autocomplete, TextField } from '@mui/material';
+
 const formatHeight = (inches: number) => {
   const feet = Math.floor(inches / 12);
   const remainder = inches % 12;
@@ -13,6 +15,8 @@ const formatHeight = (inches: number) => {
 
 function Players() {
   const [searchTerm, setSearchTerm] = useState('');
+
+  const playerNames = playerData.bio.map((player) => player.name);
 
   const filteredPlayers = playerData.bio.filter((player) =>
     player.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -23,13 +27,38 @@ function Players() {
       <div className="main-content-with-bg">
         <div className="background-logo" />
         <h1 className="branding">All Players</h1>
-        <input
-          type="text"
-          placeholder="Search players..."
-          className="player-search"
+
+        <Autocomplete
+          freeSolo
+          options={playerNames}
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(_, newValue) => setSearchTerm(newValue ?? '')}
+          onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              placeholder="Search Players..."
+              variant="standard"
+              sx={{
+                '& .MuiInputBase-root': {
+                  padding: '0.5rem 1rem',
+                  fontSize: '1rem',
+                  borderRadius: '6px',
+                  border: '1px solid #444',
+                  width: '250px',
+                  marginTop: '1rem',
+                  backgroundColor: 'white',
+                  color: 'gray',
+                },
+                '& .MuiInputBase-input': {
+                  padding: 0,
+                  color: 'gray',
+                },
+              }}
+            />
+          )}
         />
+
         <div className="players-page">
           {filteredPlayers.length === 0 ? (
             <p className="no-results">No players found.</p>
