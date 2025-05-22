@@ -45,7 +45,7 @@ function currentRoster() {
                 <td>215 lbs</td>
                 <td>$2,087,519</td>
               </tr>
-              <tr>
+              <tr title="Free Agent" className="free-agent">
                 <td>Kessler Edwards</td>
                 <td>SF</td>
                 <td>24</td>
@@ -149,7 +149,7 @@ function currentRoster() {
                 <td>230 lbs</td>
                 <td>$15,500,000</td>
               </tr>
-              <tr>
+              <tr title="Free Agent" className="free-agent">
                 <td>Brandon Williams</td>
                 <td>G</td>
                 <td>25</td>
