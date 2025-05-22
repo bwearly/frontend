@@ -143,25 +143,63 @@ function PlayerProfile({
         <thead>
           <tr>
             <th>Date</th>
-            <th>MIN</th>
-            <th>PTS</th>
-            <th>FGM</th>
-            <th>FGA</th>
-            <th>FG%</th>
-            <th>3PM</th>
-            <th>3PA</th>
-            <th>3P%</th>
-            <th>FTM</th>
-            <th>FTA</th>
-            <th>FT%</th>
-            <th>OREB</th>
-            <th>DREB</th>
-            <th>REB</th>
-            <th>AST</th>
-            <th>STL</th>
-            <th>BLK</th>
-            <th>TOV</th>
-            <th>PF</th>
+            <th title="Time Played (Minutes)" className="tool-tips">
+              MIN
+            </th>
+            <th title="Points" className="tool-tips">
+              PTS
+            </th>
+            <th title="Feild Goals Made" className="tool-tips">
+              FGM
+            </th>
+            <th title="Feild Goal Attempts" className="tool-tips">
+              FGA
+            </th>
+            <th title="Feild Goal Percent" className="tool-tips">
+              FG%
+            </th>
+            <th title="3 Points Made" className="tool-tips">
+              3PM
+            </th>
+            <th title="3 Point Attempts" className="tool-tips">
+              3PA
+            </th>
+            <th title="3 Point Percent" className="tool-tips">
+              3P%
+            </th>
+            <th title="Free Throws Made" className="tool-tips">
+              FTM
+            </th>
+            <th title="Free Throw Attempts" className="tool-tips">
+              FTA
+            </th>
+            <th title="Free Throw Percent" className="tool-tips">
+              FT%
+            </th>
+            <th title="Offensive Rebounds" className="tool-tips">
+              OREB
+            </th>
+            <th title="Defensive Rebounds" className="tool-tips">
+              DREB
+            </th>
+            <th title="Rebounds" className="tool-tips">
+              REB
+            </th>
+            <th title="Assists" className="tool-tips">
+              AST
+            </th>
+            <th title="Steals" className="tool-tips">
+              STL
+            </th>
+            <th title="Blocks" className="tool-tips">
+              BLK
+            </th>
+            <th title="Turn Overs" className="tool-tips">
+              TOV
+            </th>
+            <th title="Personal Fouls" className="tool-tips">
+              PF
+            </th>
           </tr>
         </thead>
         <tbody>
