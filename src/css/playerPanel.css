@@ -3,7 +3,7 @@
   top: 0;
   right: 0;
   height: 100%;
-  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: width 0.3s ease;
   display: flex;
   z-index: 999;
@@ -33,7 +33,9 @@
   top: 0;
   height: 100vh;
   z-index: 2;
-  border: 2px solid #555;
+  color: white;
+  background-color: #1d1f2b;
+  border: 0.5 solid #1d1f2b;
 }
 
 .scroll-wrapper {
@@ -41,6 +43,7 @@
   height: 100%;
   flex: 1;
   padding: 0.5rem;
+  background-color: #1d1f2b;
 }
 
 .scout-panel {
@@ -67,7 +70,7 @@
 .scouting-report {
   width: 100%;
   flex-grow: 1;
-  background-color: #2a2f44;
+  background-color: #1d1f2b;
   color: white;
   border: none;
   border-radius: 5px;

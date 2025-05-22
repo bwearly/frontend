@@ -1,5 +1,5 @@
 import '../App.css';
-import '../css/playerTable.css';
+import '../css/stats.css';
 import type { GameAverages } from '../types/GameAverages';
 import type { PlayerAverages } from '../types/PlayerAverages';
 import { Link } from 'react-router-dom';
@@ -38,29 +38,38 @@ function Stats({ players }: { players: PlayerAverages[] }) {
   ];
 
   return (
-    <div className="stat-leaders-grid">
-      {statCategories.map(({ title, key }) => {
-        const top5 = getTop5ByStat(players, key as keyof GameAverages);
-        return (
-          <div key={key} className="stat-box">
-            <h4>{title}</h4>
-            <ol>
-              {top5.map((p) => (
-                <li key={p.playerId}>
-                  <Link to={`/player/${p.playerId}`} className="scouting-name">
-                    {p.name}
-                  </Link>{' '}
-                  {p.team} —{' '}
-                  {formatValue(
-                    p.averages[key as keyof GameAverages],
-                    key.includes('Percent')
-                  )}
-                </li>
-              ))}
-            </ol>
-          </div>
-        );
-      })}
+    <div className="main-content-with-bg">
+      <div className="background-logo" />
+      <h1 className="branding">Stats</h1>
+      <div className="main-content-inner">
+        <div className="stat-leaders-grid">
+          {statCategories.map(({ title, key }) => {
+            const top5 = getTop5ByStat(players, key as keyof GameAverages);
+            return (
+              <div key={key} className="stat-box">
+                <h4>{title}</h4>
+                <ol>
+                  {top5.map((p) => (
+                    <li key={p.playerId}>
+                      <Link
+                        to={`/player/${p.playerId}`}
+                        className="scouting-name"
+                      >
+                        {p.name}
+                      </Link>{' '}
+                      {p.team} —{' '}
+                      {formatValue(
+                        p.averages[key as keyof GameAverages],
+                        key.includes('Percent')
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

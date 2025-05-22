@@ -1,0 +1,14 @@
+.stat-leaders-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.stat-box {
+  background-color: #1d1f2b;
+  color: white;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 50;
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { PlayerBio } from '../types/PlayerBio';
 import type { GameLog } from '../types/GameLog';
 import type { GameAverages } from '../types/GameAverages';
@@ -25,21 +25,31 @@ interface Props {
 
 function PlayerSummaryProfile({ player, gameLogs, averages }: Props) {
   const [showCombineData, setShowCombineData] = useState(false);
+  const [editableReport, setEditableReport] = useState('');
 
   const combineData = playerData.measurements?.find(
     (p: any) => p.playerId === player.playerId
   );
 
+  useEffect(() => {
+    const report = playerData.scoutingReports.find(
+      (r) => r.playerId === player.playerId
+    );
+    setEditableReport(report?.report ?? '');
+  }, [player.playerId]);
+
   return (
-    <div className="player-summary-profile player-summary">
-      <div className="player-summary-header">
+    <div className="player-profile">
+      <div className="player-header">
         <img
           className="player-profile-img"
           src={player.photoUrl ?? defaultImg}
           alt={player.name}
         />
         <div className="player-info-block">
-          <h2 className="player-name-profile">{player.name}</h2>
+          <div className="player-name-section">
+            <h2 className="player-name-profile">{player.name}</h2>
+          </div>
           <div className="player-details">
             <p>
               <strong>Team:</strong> {player.currentTeam ?? 'N/A'}
@@ -54,7 +64,7 @@ function PlayerSummaryProfile({ player, gameLogs, averages }: Props) {
               <strong>Weight:</strong> {player.weight} lbs
             </p>
             <p>
-              <strong>Hometown:</strong> {player.homeTown},
+              <strong>Hometown:</strong> {player.homeTown},{' '}
               {player.homeState ?? player.homeCountry}
             </p>
             <p>
@@ -138,13 +148,12 @@ function PlayerSummaryProfile({ player, gameLogs, averages }: Props) {
               <td>{log.blk}</td>
             </tr>
           ))}
-
           {averages && (
             <tr className="average-row">
               <td>
                 <strong>AVG</strong>
               </td>
-              <td>{averages.timePlayed?.split(':')[0]}</td>
+              <td>{averages.timePlayed.split(':')[0]}</td>
               <td>{averages.pts}</td>
               <td>{averages.fgm}</td>
               <td>{averages.fga}</td>
@@ -169,6 +178,13 @@ function PlayerSummaryProfile({ player, gameLogs, averages }: Props) {
           )}
         </tbody>
       </table>
+
+      <h3 className="section-title">Scouting Report</h3>
+      <textarea
+        className="scouting-report-player"
+        value={editableReport || 'No scouting report available.'}
+        readOnly
+      />
     </div>
   );
 }

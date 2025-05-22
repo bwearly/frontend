@@ -27,6 +27,7 @@ body,
   flex-grow: 1;
   padding: 2rem;
   overflow: auto;
+  background-color: #2a2f44;
 }
 
 .main-content-with-bg {
@@ -36,6 +37,7 @@ body,
   flex-grow: 1;
   padding: 2rem;
   overflow: visible;
+  background-color: #2a2f44;
 }
 
 .main-content-inner {
@@ -86,7 +88,8 @@ body,
   width: 100%;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #2a2f44;
+  border-bottom: 1px solid #1d1f2b;
+  color: white;
 }
 
 .branding h1 {
@@ -126,9 +129,14 @@ body,
   min-width: 300px;
   max-width: 50%;
   min-height: 246px;
+  background-color: #1d1f2b;
+  color: white;
 }
 
 .scout-panel-container {
   flex: 1;
   max-width: 350px;
+  background-color: #1d1f2b;
+  color: white;
+  border-radius: 10px;
 }

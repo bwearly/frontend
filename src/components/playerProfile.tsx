@@ -233,7 +233,7 @@ function PlayerProfile({
       {isEditing ? (
         <>
           <textarea
-            className="scouting-report"
+            className="scouting-report-player"
             value={editableReport}
             onChange={(e) => setEditableReport(e.target.value)}
           />
@@ -248,7 +248,7 @@ function PlayerProfile({
       ) : (
         <>
           <textarea
-            className="scouting-report"
+            className="scouting-report-player"
             value={editableReport || 'No scouting report available.'}
             readOnly
           />

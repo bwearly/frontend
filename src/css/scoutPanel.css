@@ -12,6 +12,7 @@
   margin-bottom: 0.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgb(49, 50, 63);
 }
 
 .scout-info {
@@ -33,14 +34,17 @@
   cursor: pointer;
   font-size: x-large;
   font-weight: bolder;
+  background-color: rgb(72, 74, 91);
 }
 
 .arrow-btn.green {
   color: green;
+  background-color: rgb(55, 87, 50);
 }
 
 .arrow-btn.red {
   color: red;
+  background-color: rgb(109, 65, 65);
 }
 
 .move-count {

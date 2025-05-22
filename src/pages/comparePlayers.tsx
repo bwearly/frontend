@@ -28,46 +28,49 @@ function ComparePlayers() {
   };
 
   return (
-    <div className="compare-container">
-      <PlayerPanel
-        isOpen={isPanelOpen}
-        toggleOpen={() => setIsPanelOpen((prev) => !prev)}
-        onSelectPlayer={() => {}}
-      />
+    <div className="main-content-with-bg">
+      <div className="background-logo" />
+      <h1 className="branding">Compare Players</h1>
+      <div className="main-content-inner">
+        <div className="compare-container">
+          <PlayerPanel
+            isOpen={isPanelOpen}
+            toggleOpen={() => setIsPanelOpen((prev) => !prev)}
+            onSelectPlayer={() => {}}
+          />
 
-      <div className="compare-area">
-        <h1>Compare Players</h1>
-        <div className="drop-zones">
-          <div
-            className="drop-zone"
-            onDrop={(e) => handleDrop(e, 'player1')}
-            onDragOver={allowDrop}
-          >
-            {player1 ? (
-              <PlayerSummaryProfile
-                player={player1}
-                gameLogs={[]}
-                averages={null}
-              />
-            ) : (
-              <p>Drop Player 1 Here</p>
-            )}
-          </div>
+          <div className="drop-zones">
+            <div
+              className="drop-zone"
+              onDrop={(e) => handleDrop(e, 'player1')}
+              onDragOver={allowDrop}
+            >
+              {player1 ? (
+                <PlayerSummaryProfile
+                  player={player1}
+                  gameLogs={[]}
+                  averages={null}
+                />
+              ) : (
+                <p>Drag Player 1 Here</p>
+              )}
+            </div>
 
-          <div
-            className="drop-zone"
-            onDrop={(e) => handleDrop(e, 'player2')}
-            onDragOver={allowDrop}
-          >
-            {player2 ? (
-              <PlayerSummaryProfile
-                player={player2}
-                gameLogs={[]}
-                averages={null}
-              />
-            ) : (
-              <p>Drop Player 2 Here</p>
-            )}
+            <div
+              className="drop-zone"
+              onDrop={(e) => handleDrop(e, 'player2')}
+              onDragOver={allowDrop}
+            >
+              {player2 ? (
+                <PlayerSummaryProfile
+                  player={player2}
+                  gameLogs={[]}
+                  averages={null}
+                />
+              ) : (
+                <p>Drag Player 2 Here</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

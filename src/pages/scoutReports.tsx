@@ -31,8 +31,9 @@ function ScoutReports() {
   );
 
   return (
-    <div>
-      <h1>Scout Reports</h1>
+    <div className="main-content-with-bg">
+      <div className="background-logo" />
+      <h1 className="branding">Scouting Reports</h1>
       {playersWithReports.map((player) => {
         const report = playerData.scoutingReports.find(
           (r) => r.playerId === player.playerId
