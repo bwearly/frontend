@@ -24,14 +24,14 @@ function PlayerCard({ player, onSelect }: PlayerCardProps) {
       }}
     >
       <img
-        className="large-profile-picture-panel"
+        className="profile-picture-panel"
         src={player.photoUrl ?? defaultImg}
         alt={player.name}
       />
-      <div className="large-player-info">
-        <h3 className="player-name">{player.name}</h3>
+      <div className="player-info">
+        <h3 className="player-name-card">{player.name}</h3>
         <p className="player-team">{player.currentTeam ?? 'N/A'}</p>
-        <p className="large-player-hometown">
+        <p className="player-hometown">
           {formatHeight(player.height)} | {player.weight} lbs
         </p>
       </div>

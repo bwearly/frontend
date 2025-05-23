@@ -34,8 +34,9 @@
   height: 100vh;
   z-index: 2;
   color: white;
-  background-color: #1d1f2b;
+  background-color: #21232d;
   border: 0.5 solid #1d1f2b;
+  border-radius: 10px 0;
 }
 
 .scroll-wrapper {

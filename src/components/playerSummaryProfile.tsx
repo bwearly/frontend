@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import type { PlayerBio } from '../types/PlayerBio';
-import type { GameLog } from '../types/GameLog';
 import type { GameAverages } from '../types/GameAverages';
 import '../css/playerProfile.css';
 import defaultImg from '../assets/default.png';
@@ -12,19 +11,27 @@ const formatHeight = (inches: number) => {
   return `${feet}'${remainder}"`;
 };
 
-const formatPercent = (made: number, attempts: number) => {
-  if (attempts === 0) return '-';
-  return `${((made / attempts) * 100).toFixed(1)}%`;
+const highlight = (
+  val: number | null | undefined,
+  other: number | null | undefined
+) => {
+  if (val == null || other == null) return '';
+  return val > other ? 'highlight-green' : '';
 };
 
 interface Props {
   player: PlayerBio;
-  gameLogs: GameLog[];
   averages: GameAverages | null;
+  compareAverages?: GameAverages | null;
+  onClose?: () => void;
 }
 
-function PlayerSummaryProfile({ player, gameLogs, averages }: Props) {
-  const [showCombineData, setShowCombineData] = useState(false);
+function PlayerSummaryProfile({
+  player,
+  averages,
+  compareAverages,
+  onClose,
+}: Props) {
   const [editableReport, setEditableReport] = useState('');
 
   const combineData = playerData.measurements?.find(
@@ -39,149 +46,197 @@ function PlayerSummaryProfile({ player, gameLogs, averages }: Props) {
   }, [player.playerId]);
 
   return (
-    <div className="player-profile">
-      <div className="player-header">
+    <div className="player-summary-profile" style={{ overflow: 'hidden' }}>
+      {onClose && (
+        <button
+          className="close-button profile-summary-close"
+          onClick={onClose}
+        >
+          ✖
+        </button>
+      )}
+
+      <div className="player-summary-header">
         <img
-          className="player-profile-img"
+          className="player-summary-img"
           src={player.photoUrl ?? defaultImg}
           alt={player.name}
         />
-        <div className="player-info-block">
-          <div className="player-name-section">
-            <h2 className="player-name-profile">{player.name}</h2>
-          </div>
-          <div className="player-details">
-            <p>
-              <strong>Team:</strong> {player.currentTeam ?? 'N/A'}
-            </p>
-            <p>
-              <strong>League:</strong> {player.league ?? 'N/A'}
-            </p>
-            <p>
-              <strong>Height:</strong> {formatHeight(player.height)}
-            </p>
-            <p>
-              <strong>Weight:</strong> {player.weight} lbs
-            </p>
-            <p>
-              <strong>Hometown:</strong> {player.homeTown},{' '}
-              {player.homeState ?? player.homeCountry}
-            </p>
-            <p>
-              <strong>Birth Date:</strong>{' '}
-              {player.birthDate
-                ? new Date(player.birthDate).toLocaleDateString()
-                : 'N/A'}
-            </p>
+        <div className="player-summary-info-block">
+          <h2 className="player-summary-name">{player.name}</h2>
+          <div className="player-summary-columns">
+            <div className="player-summary-col">
+              <p>
+                <strong>Team:</strong> {player.currentTeam ?? 'N/A'}
+              </p>
+              <p>
+                <strong>Height:</strong> {formatHeight(player.height)}
+              </p>
+              <p>
+                <strong>Hometown:</strong> {player.homeTown},{' '}
+                {player.homeState ?? player.homeCountry}
+              </p>
+            </div>
+            <div className="player-summary-col">
+              <p>
+                <strong>League:</strong> {player.league ?? 'N/A'}
+              </p>
+              <p>
+                <strong>Weight:</strong> {player.weight} lbs
+              </p>
+              <p>
+                <strong>Birth Date:</strong>{' '}
+                {player.birthDate
+                  ? new Date(player.birthDate).toLocaleDateString()
+                  : 'N/A'}
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <button
-        className="toggle-button"
-        onClick={() => setShowCombineData(!showCombineData)}
-      >
-        {showCombineData
-          ? 'Hide Combine Measurements'
-          : 'Show Combine Measurements'}
-      </button>
+      {combineData && (
+        <div className="combine-summary-columns">
+          <div className="combine-summary-col">
+            <div className="row">
+              <span className="label">Height (No Shoes):</span>{' '}
+              {combineData.heightNoShoes}"
+            </div>
+            <div className="row">
+              <span className="label">Height (Shoes):</span>{' '}
+              {combineData.heightShoes}"
+            </div>
+            <div className="row">
+              <span className="label">Wingspan:</span> {combineData.wingspan}"
+            </div>
+            <div className="row">
+              <span className="label">Reach:</span> {combineData.reach}"
+            </div>
+            <div className="row">
+              <span className="label">Vertical (Max):</span>{' '}
+              {combineData.maxVertical}"
+            </div>
+            <div className="row">
+              <span className="label">Vertical (No Step):</span>{' '}
+              {combineData.noStepVertical}"
+            </div>
+          </div>
 
-      {showCombineData && combineData && (
-        <div className="combine-section-grid">
-          <div className="label">Height (No Shoes):</div>
-          <div className="value">{combineData.heightNoShoes}"</div>
-          <div className="label">Wingspan:</div>
-          <div className="value">{combineData.wingspan}"</div>
-          <div className="label">Reach:</div>
-          <div className="value">{combineData.reach}"</div>
-          <div className="label">Vertical (Max):</div>
-          <div className="value">{combineData.maxVertical}"</div>
-          <div className="label">Weight:</div>
-          <div className="value">{combineData.weight} lbs</div>
+          <div className="combine-summary-col">
+            <div className="row">
+              <span className="label">Weight:</span> {combineData.weight} lbs
+            </div>
+            <div className="row">
+              <span className="label">Hand Size:</span> {combineData.handLength}
+              " x {combineData.handWidth}"
+            </div>
+            <div className="row">
+              <span className="label">Agility:</span>{' '}
+              {combineData.agility ?? '--'}s
+            </div>
+            <div className="row">
+              <span className="label">Sprint:</span>{' '}
+              {combineData.sprint ?? '--'}s
+            </div>
+            <div className="row">
+              <span className="label">Shuttle:</span>{' '}
+              {combineData.shuttleBest ?? '--'}s
+            </div>
+          </div>
         </div>
       )}
 
-      <h3 className="section-title">Game Logs</h3>
-      <table className="game-log-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>MIN</th>
-            <th>PTS</th>
-            <th>FGM</th>
-            <th>FGA</th>
-            <th>FG%</th>
-            <th>3PM</th>
-            <th>3PA</th>
-            <th>3P%</th>
-            <th>FTM</th>
-            <th>FTA</th>
-            <th>FT%</th>
-            <th>REB</th>
-            <th>AST</th>
-            <th>STL</th>
-            <th>BLK</th>
-          </tr>
-        </thead>
-        <tbody>
-          {gameLogs.map((log, idx) => (
-            <tr key={idx}>
-              <td>
-                {log.date
-                  ? new Date(log.date).toLocaleDateString()
-                  : `Game ${idx + 1}`}
-              </td>
-              <td>{log.timePlayed?.split(':')[0]}</td>
-              <td>{log.pts}</td>
-              <td>{log.fgm}</td>
-              <td>{log.fga}</td>
-              <td>{formatPercent(log.fgm, log.fga)}</td>
-              <td>{log.tpm}</td>
-              <td>{log.tpa}</td>
-              <td>{formatPercent(log.tpm, log.tpa)}</td>
-              <td>{log.ftm}</td>
-              <td>{log.fta}</td>
-              <td>{formatPercent(log.ftm, log.fta)}</td>
-              <td>{log.reb}</td>
-              <td>{log.ast}</td>
-              <td>{log.stl}</td>
-              <td>{log.blk}</td>
-            </tr>
-          ))}
-          {averages && (
-            <tr className="average-row">
-              <td>
-                <strong>AVG</strong>
-              </td>
-              <td>{averages.timePlayed.split(':')[0]}</td>
-              <td>{averages.pts}</td>
-              <td>{averages.fgm}</td>
-              <td>{averages.fga}</td>
-              <td>
-                {averages.fgPercent != null ? `${averages.fgPercent}%` : '-'}
-              </td>
-              <td>{averages.tpm}</td>
-              <td>{averages.tpa}</td>
-              <td>
-                {averages.tpPercent != null ? `${averages.tpPercent}%` : '-'}
-              </td>
-              <td>{averages.ftm}</td>
-              <td>{averages.fta}</td>
-              <td>
-                {averages.ftPercent != null ? `${averages.ftPercent}%` : '-'}
-              </td>
-              <td>{averages.reb}</td>
-              <td>{averages.ast}</td>
-              <td>{averages.stl}</td>
-              <td>{averages.blk}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <h3 className="section-title">Averages</h3>
+      {averages && (
+        <div className="averages-summary-wrapper">
+          <table className="averages-summary-table">
+            <thead>
+              <tr className="averages-summery-row">
+                <th>MIN</th>
+                <th>PTS</th>
+                <th>FGM</th>
+                <th>FGA</th>
+                <th>FG%</th>
+                <th>3PM</th>
+                <th>3PA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{averages.timePlayed.split(':')[0]}</td>
+                <td className={highlight(averages.pts, compareAverages?.pts)}>
+                  {averages.pts}
+                </td>
+                <td>{averages.fgm}</td>
+                <td>{averages.fga}</td>
+                <td
+                  className={highlight(
+                    averages.fgPercent,
+                    compareAverages?.fgPercent
+                  )}
+                >
+                  {averages.fgPercent != null ? `${averages.fgPercent}%` : '-'}
+                </td>
+                <td>{averages.tpm}</td>
+                <td>{averages.tpa}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table className="averages-summary-table">
+            <thead>
+              <tr className="averages-summery-row">
+                <th>3P%</th>
+                <th>FTM</th>
+                <th>FTA</th>
+                <th>FT%</th>
+                <th>REB</th>
+                <th>AST</th>
+                <th>STL</th>
+                <th>BLK</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  className={highlight(
+                    averages.tpPercent,
+                    compareAverages?.tpPercent
+                  )}
+                >
+                  {averages.tpPercent != null ? `${averages.tpPercent}%` : '-'}
+                </td>
+                <td>{averages.ftm}</td>
+                <td>{averages.fta}</td>
+                <td
+                  className={highlight(
+                    averages.ftPercent,
+                    compareAverages?.ftPercent
+                  )}
+                >
+                  {averages.ftPercent != null ? `${averages.ftPercent}%` : '-'}
+                </td>
+                <td className={highlight(averages.reb, compareAverages?.reb)}>
+                  {averages.reb}
+                </td>
+                <td className={highlight(averages.ast, compareAverages?.ast)}>
+                  {averages.ast}
+                </td>
+                <td className={highlight(averages.stl, compareAverages?.stl)}>
+                  {averages.stl}
+                </td>
+                <td className={highlight(averages.blk, compareAverages?.blk)}>
+                  {averages.blk}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <h3 className="section-title">Scouting Report</h3>
       <textarea
-        className="scouting-report-player"
+        className="scouting-report-summary"
         value={editableReport || 'No scouting report available.'}
         readOnly
       />

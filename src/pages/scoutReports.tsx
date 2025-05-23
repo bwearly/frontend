@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Fab } from '@mui/material';
+import { Fab, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import ArrowUpward from '@mui/icons-material/ArrowUpward';
+import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import AddScoutingReport from '../components/addScoutingReport';
 import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';
@@ -18,6 +20,14 @@ const formatHeight = (inches: number) => {
 
 function ScoutReports() {
   const [modalOpen, setModalOpen] = useState(false);
+  const { scoutingReports, addReport } = useScoutingReports();
+  const [playerList, setPlayerList] = useState<PlayerBio[]>([]);
+  const [originalIndexes, setOriginalIndexes] = useState<
+    Record<string, number>
+  >({});
+  const [moveDirection, setMoveDirection] = useState<
+    Record<string, 'up' | 'down' | null>
+  >({});
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -33,21 +43,67 @@ function ScoutReports() {
     }
   }, []);
 
-  const { scoutingReports, addReport } = useScoutingReports();
+  useEffect(() => {
+    const players = playerData.bio.filter((player) =>
+      scoutingReports.some((r) => r.playerId === player.playerId)
+    );
+    setPlayerList(players);
 
-  const playersWithReports: PlayerBio[] = playerData.bio.filter((player) =>
-    scoutingReports.some((r) => r.playerId === player.playerId)
-  );
+    const indexMap: Record<string, number> = {};
+    players.forEach((p, i) => {
+      indexMap[p.playerId.toString()] = i;
+    });
+    setOriginalIndexes(indexMap);
+  }, [scoutingReports]);
+
+  const movePlayer = (index: number, direction: 'up' | 'down') => {
+    const newList = [...playerList];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= newList.length) return;
+
+    const movingPlayer = newList[index];
+    const bumpedPlayer = newList[targetIndex];
+    [newList[index], newList[targetIndex]] = [bumpedPlayer, movingPlayer];
+    setPlayerList(newList);
+
+    const getDir = (
+      playerId: number,
+      newIndex: number
+    ): 'up' | 'down' | null => {
+      const original = originalIndexes[playerId.toString()];
+      if (original === undefined) return null;
+      if (newIndex < original) return 'up';
+      if (newIndex > original) return 'down';
+      return null;
+    };
+
+    setMoveDirection((prev) => ({
+      ...prev,
+      [movingPlayer.playerId.toString()]: getDir(
+        movingPlayer.playerId,
+        targetIndex
+      ),
+      [bumpedPlayer.playerId.toString()]: getDir(bumpedPlayer.playerId, index),
+    }));
+  };
+
+  const getMoveOffset = (playerId: number, currentIndex: number) => {
+    const originalIndex = originalIndexes[playerId.toString()];
+    if (originalIndex === undefined) return null;
+    const diff = Math.abs(originalIndex - currentIndex);
+    return diff > 0 ? diff : null;
+  };
 
   return (
     <div className="main-content-with-bg">
       <div className="background-logo" />
       <h1 className="branding">Scouting Reports</h1>
 
-      {playersWithReports.map((player) => {
+      {playerList.map((player, index) => {
         const report = scoutingReports.find(
           (r) => r.playerId === player.playerId
         );
+        const offset = getMoveOffset(player.playerId, index);
 
         return (
           <div
@@ -74,6 +130,31 @@ function ScoutReports() {
                   {formatHeight(player.height)} | {player.weight} lbs
                 </p>
                 <p>{player.currentTeam}</p>
+                <div className="scout-actions">
+                  <IconButton
+                    onClick={() => movePlayer(index, 'up')}
+                    style={{
+                      color:
+                        moveDirection[player.playerId.toString()] === 'up'
+                          ? 'green'
+                          : '#aaa',
+                    }}
+                  >
+                    <ArrowUpward />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => movePlayer(index, 'down')}
+                    style={{
+                      color:
+                        moveDirection[player.playerId.toString()] === 'down'
+                          ? 'red'
+                          : '#aaa',
+                    }}
+                  >
+                    <ArrowDownward />
+                  </IconButton>
+                  {offset && <span className="move-count">{offset}</span>}
+                </div>
               </div>
             </div>
             <div className="scouting-right">
@@ -85,11 +166,13 @@ function ScoutReports() {
           </div>
         );
       })}
+
       <AddScoutingReport
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         addReport={addReport}
       />
+
       <Fab
         aria-label="add"
         onClick={() => setModalOpen(true)}

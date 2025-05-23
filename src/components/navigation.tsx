@@ -5,7 +5,7 @@ export default function Navigation() {
   const navigate = useNavigate();
 
   const navItems = [
-    { label: 'Player', path: '/players' },
+    { label: 'Players', path: '/players' },
     { label: 'Stats', path: '/stats' },
     { label: 'Current Roster', path: '/currentRoster' },
     { label: 'Compare Players', path: '/compare' },

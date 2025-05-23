@@ -116,9 +116,7 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
                 }}
                 style={{
                   color:
-                    moveDirection[player.playerId] === 'up'
-                      ? 'green'
-                      : undefined,
+                    moveDirection[player.playerId] === 'up' ? 'green' : '#bbb',
                 }}
               >
                 <ArrowUpward />
@@ -130,9 +128,7 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
                 }}
                 style={{
                   color:
-                    moveDirection[player.playerId] === 'down'
-                      ? 'red'
-                      : undefined,
+                    moveDirection[player.playerId] === 'down' ? 'red' : '#bbb',
                 }}
               >
                 <ArrowDownward />

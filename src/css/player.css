@@ -35,6 +35,10 @@
   justify-content: center;
 }
 
+.player-grid.align-left {
+  justify-content: flex-start;
+}
+
 .no-results {
   text-align: center;
   margin-top: 2rem;

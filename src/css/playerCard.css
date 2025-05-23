@@ -23,8 +23,8 @@
 
 .profile-picture-panel {
   width: 60px;
-  height: 60px;
-  border-radius: 50%;
+  height: 80px;
+  border-radius: 15%;
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -33,24 +33,23 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   flex: 1;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .player-name-card {
   font-weight: bold;
-  font-size: 0.95rem;
-  margin: 0;
+  margin: 0 0 0.2rem 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .player-school {
-  font-style: italic;
-  color: #a0c4ff;
-  margin: 0;
+  color: white;
+  margin: 0 0 0.2rem 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

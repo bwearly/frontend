@@ -4,11 +4,25 @@ import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';
 import '../css/comparePlayer.css';
 import PlayerSummaryProfile from '../components/playerSummaryProfile';
+import { transformRawLog } from '../utils/TransformGameLogs';
+import { calculateAverages } from '../utils/calculateAverages';
 
 function ComparePlayers() {
   const [isPanelOpen, setIsPanelOpen] = useState(true);
   const [player1, setPlayer1] = useState<PlayerBio | null>(null);
   const [player2, setPlayer2] = useState<PlayerBio | null>(null);
+
+  const allLogs = playerData.game_logs.map(transformRawLog);
+
+  const player1Logs = player1
+    ? allLogs.filter((log) => log.playerId === player1.playerId)
+    : [];
+  const player2Logs = player2
+    ? allLogs.filter((log) => log.playerId === player2.playerId)
+    : [];
+
+  const averages1 = player1Logs.length ? calculateAverages(player1Logs) : null;
+  const averages2 = player2Logs.length ? calculateAverages(player2Logs) : null;
 
   const handleDrop = (
     event: React.DragEvent<HTMLDivElement>,
@@ -27,6 +41,24 @@ function ComparePlayers() {
     event.preventDefault();
   };
 
+  const handleSelect = (player: PlayerBio) => {
+    if (!player1) {
+      setPlayer1(player);
+      if (player2) setIsPanelOpen(false);
+    } else if (!player2) {
+      setPlayer2(player);
+      if (player1) setIsPanelOpen(false);
+    } else {
+      const confirmReplace = window.confirm(
+        'Both slots are full. Replace Player 1 with new selection?'
+      );
+      if (confirmReplace) {
+        setPlayer1(player);
+        setPlayer2(null);
+      }
+    }
+  };
+
   return (
     <div className="main-content-with-bg">
       <div className="background-logo" />
@@ -36,7 +68,7 @@ function ComparePlayers() {
           <PlayerPanel
             isOpen={isPanelOpen}
             toggleOpen={() => setIsPanelOpen((prev) => !prev)}
-            onSelectPlayer={() => {}}
+            onSelectPlayer={handleSelect}
           />
 
           <div className="drop-zones">
@@ -46,13 +78,21 @@ function ComparePlayers() {
               onDragOver={allowDrop}
             >
               {player1 ? (
-                <PlayerSummaryProfile
-                  player={player1}
-                  gameLogs={[]}
-                  averages={null}
-                />
+                <div className="drop-wrapper">
+                  <button
+                    className="close-button"
+                    onClick={() => setPlayer1(null)}
+                  >
+                    ✖
+                  </button>
+                  <PlayerSummaryProfile
+                    player={player1}
+                    averages={averages1}
+                    compareAverages={averages2}
+                  />
+                </div>
               ) : (
-                <p>Drag Player 1 Here</p>
+                <p>Click or Drag Player 1 Here</p>
               )}
             </div>
 
@@ -62,13 +102,21 @@ function ComparePlayers() {
               onDragOver={allowDrop}
             >
               {player2 ? (
-                <PlayerSummaryProfile
-                  player={player2}
-                  gameLogs={[]}
-                  averages={null}
-                />
+                <div className="drop-wrapper">
+                  <button
+                    className="close-button"
+                    onClick={() => setPlayer2(null)}
+                  >
+                    ✖
+                  </button>
+                  <PlayerSummaryProfile
+                    player={player2}
+                    averages={averages2}
+                    compareAverages={averages1}
+                  />
+                </div>
               ) : (
-                <p>Drag Player 2 Here</p>
+                <p>Click or Drag Player 2 Here</p>
               )}
             </div>
           </div>
