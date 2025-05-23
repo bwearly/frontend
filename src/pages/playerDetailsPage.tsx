@@ -35,10 +35,6 @@ function PlayerDetailsPage() {
     ftPercent: log['FTP'],
   }));
 
-  const report =
-    playerData.scoutingReports.find((r) => r.playerId === player.playerId)
-      ?.report ?? null;
-
   const averages = gameLogs.length > 0 ? calculateAverages(gameLogs) : null;
 
   return (
@@ -49,7 +45,6 @@ function PlayerDetailsPage() {
           player={player}
           gameLogs={gameLogs}
           averages={averages}
-          report={report}
           onClose={() => navigate(-1)}
         />
       </div>

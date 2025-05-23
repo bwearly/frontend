@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import '../App.css';
+import AddIcon from '@mui/icons-material/Add';
+import { Fab } from '@mui/material';
 import PlayerProfile from '../components/playerProfile';
 import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';
@@ -11,9 +13,12 @@ import groupLogsByPlayer from '../utils/GroupLogsByPlayers';
 import StatCard from '../components/statsCard';
 import SalaryCard from '../components/salaryCard';
 import ScoutPanel from '../components/scoutPanel';
+import { useScoutingReports } from '../utils/ScoutingReportContext';
+import AddScoutingReport from '../components/addScoutingReport';
 
 function Home() {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerBio | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const allLogs: GameLog[] = playerData.game_logs.map(transformRawLog);
 
@@ -21,17 +26,9 @@ function Home() {
     ? allLogs.filter((log) => log.playerId === selectedPlayer.playerId)
     : [];
 
-  const report = selectedPlayer
-    ? playerData.scoutingReports.find(
-        (r) => r.playerId === selectedPlayer.playerId
-      )
-    : null;
-
   const averages = playerLogs.length > 0 ? calculateAverages(playerLogs) : null;
 
-  const rawLogs = playerData.game_logs.map(transformRawLog);
-
-  const grouped = groupLogsByPlayer(rawLogs);
+  const grouped = groupLogsByPlayer(allLogs);
 
   const players = grouped.map((p) => ({
     playerId: p.playerId,
@@ -40,10 +37,10 @@ function Home() {
     averages: calculateAverages(p.logs),
   }));
 
+  const { scoutingReports, addReport } = useScoutingReports();
+
   const playersWithReports = playerData.bio
-    .filter((p) =>
-      playerData.scoutingReports.some((r) => r.playerId === p.playerId)
-    )
+    .filter((p) => scoutingReports.some((r) => r.playerId === p.playerId))
     .map((p) => ({
       playerId: p.playerId.toString(),
       name: `${p.firstName} ${p.lastName}`,
@@ -66,10 +63,10 @@ function Home() {
                   player={selectedPlayer}
                   gameLogs={playerLogs}
                   averages={averages}
-                  report={report?.report ?? null}
                   onClose={() => setSelectedPlayer(null)}
                 />
               )}
+
               <div className="stat-salary-wrapper">
                 <StatCard players={players} />
                 <SalaryCard />
@@ -81,6 +78,28 @@ function Home() {
           </div>
         </div>
       </div>
+      <Fab
+        aria-label="add"
+        sx={{
+          position: 'fixed',
+          bottom: 16,
+          right: 16,
+          backgroundColor: '#1d1f2b',
+          border: 'none',
+          color: '#fff',
+          '&:hover': {
+            backgroundColor: '#2c2f3e',
+          },
+        }}
+        onClick={() => setModalOpen(true)}
+      >
+        <AddIcon />
+      </Fab>
+      <AddScoutingReport
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        addReport={addReport}
+      />
     </div>
   );
 }

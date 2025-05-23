@@ -4,6 +4,7 @@ import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';
 import '../css/playerTable.css';
 import defaultImg from '../assets/default.png';
+import { useScoutingReports } from '../utils/ScoutingReportContext';
 
 interface PlayerTableProps {
   onSelectPlayer: (player: PlayerBio) => void;
@@ -15,11 +16,17 @@ const formatHeight = (inches: number) => {
   return `${feet}'${remainder}"`;
 };
 
-function PlayerTable({}: PlayerTableProps) {
+function PlayerTable({ onSelectPlayer }: PlayerTableProps) {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const { scoutingReports } = useScoutingReports();
 
-  const toggleExpand = (playerId: string) => {
-    setExpandedRow((prev) => (prev === playerId ? null : playerId));
+  const toggleExpand = (player: PlayerBio) => {
+    const id = player.playerId.toString();
+    setExpandedRow((prev) => (prev === id ? null : id));
+
+    if (expandedRow !== id) {
+      onSelectPlayer(player);
+    }
   };
 
   const players = playerData.bio;
@@ -41,11 +48,15 @@ function PlayerTable({}: PlayerTableProps) {
             const id = player.playerId.toString();
             const isExpanded = expandedRow === id;
 
+            const report = scoutingReports.find(
+              (r) => r.playerId === player.playerId
+            )?.report;
+
             return (
               <>
                 <tr
                   key={id}
-                  onClick={() => toggleExpand(id)}
+                  onClick={() => toggleExpand(player)}
                   style={{ cursor: 'pointer' }}
                 >
                   <td>{index + 1}</td>
@@ -94,9 +105,7 @@ function PlayerTable({}: PlayerTableProps) {
                         <div className="scouting-right">
                           <h4>Pre-Draft Analysis</h4>
                           <p className="scouting-summary">
-                            {playerData.scoutingReports.find(
-                              (r) => r.playerId === player.playerId
-                            )?.report ?? 'No scouting report available.'}
+                            {report ?? 'No scouting report available.'}
                           </p>
                         </div>
                       </div>

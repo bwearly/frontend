@@ -137,6 +137,7 @@ export default function ScoutingPanel({ playersWithReports }: Props) {
               >
                 <ArrowDownward />
               </IconButton>
+
               {offset && <span className="move-count">{offset}</span>}
             </div>
           </div>

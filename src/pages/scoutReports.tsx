@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import AddScoutingReport from '../components/addScoutingReport';
 import type { PlayerBio } from '../types/PlayerBio';
 import playerData from '../api/PlayerData.json';
 import '../css/playerTable.css';
 import '../css/scoutPanel.css';
 import defaultImg from '../assets/default.png';
+import { useScoutingReports } from '../utils/ScoutingReportContext';
 
 const formatHeight = (inches: number) => {
   const feet = Math.floor(inches / 12);
@@ -13,6 +17,8 @@ const formatHeight = (inches: number) => {
 };
 
 function ScoutReports() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
@@ -26,16 +32,20 @@ function ScoutReports() {
       }, 100);
     }
   }, []);
+
+  const { scoutingReports, addReport } = useScoutingReports();
+
   const playersWithReports: PlayerBio[] = playerData.bio.filter((player) =>
-    playerData.scoutingReports.some((r) => r.playerId === player.playerId)
+    scoutingReports.some((r) => r.playerId === player.playerId)
   );
 
   return (
     <div className="main-content-with-bg">
       <div className="background-logo" />
       <h1 className="branding">Scouting Reports</h1>
+
       {playersWithReports.map((player) => {
-        const report = playerData.scoutingReports.find(
+        const report = scoutingReports.find(
           (r) => r.playerId === player.playerId
         );
 
@@ -52,11 +62,10 @@ function ScoutReports() {
                 className="scouting-img"
               />
               <div className="scouting-basic-info">
-                <h3 onClick={(e) => e.stopPropagation()}>
+                <h3>
                   <Link
                     to={`/player/${player.playerId}`}
                     className="scouting-name"
-                    onClick={(e) => e.stopPropagation()}
                   >
                     {player.name}
                   </Link>
@@ -76,6 +85,27 @@ function ScoutReports() {
           </div>
         );
       })}
+      <AddScoutingReport
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        addReport={addReport}
+      />
+      <Fab
+        aria-label="add"
+        onClick={() => setModalOpen(true)}
+        sx={{
+          position: 'fixed',
+          bottom: 30,
+          right: 30,
+          backgroundColor: '#1d1f2b',
+          color: '#fff',
+          '&:hover': {
+            backgroundColor: '#2c2f3e',
+          },
+        }}
+      >
+        <AddIcon />
+      </Fab>
     </div>
   );
 }

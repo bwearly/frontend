@@ -6,6 +6,7 @@ import '../css/playerProfile.css';
 import defaultImg from '../assets/default.png';
 import playerData from '../api/PlayerData.json';
 import Tooltip from '@mui/material/Tooltip';
+import { useScoutingReports } from '../utils/ScoutingReportContext';
 
 const formatHeight = (inches: number) => {
   const feet = Math.floor(inches / 12);
@@ -23,7 +24,6 @@ interface PlayerProfileProps {
   player: PlayerBio;
   gameLogs: GameLog[];
   averages: GameAverages | null;
-  report: string | null;
   onClose: () => void;
 }
 
@@ -31,20 +31,38 @@ function PlayerProfile({
   player,
   gameLogs,
   averages,
-  report,
   onClose,
 }: PlayerProfileProps) {
-  const [editableReport, setEditableReport] = useState(report ?? '');
+  const { scoutingReports, addReport } = useScoutingReports();
+  const [editableReport, setEditableReport] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [showCombineData, setShowCombineData] = useState(false);
+
+  // Get the latest scouting report any time the context updates
+  useEffect(() => {
+    const reportObj = scoutingReports.find(
+      (r) => r.playerId === player.playerId
+    );
+    setEditableReport(reportObj?.report ?? '');
+  }, [player.playerId, scoutingReports]);
+
+  const handleSave = () => {
+    const existing = scoutingReports.find(
+      (r) => r.playerId === player.playerId
+    );
+    if (editableReport.trim()) {
+      addReport(
+        player.playerId,
+        existing?.scout ?? 'Unknown Scout',
+        editableReport.trim()
+      );
+    }
+    setIsEditing(false);
+  };
 
   const combineData = playerData.measurements?.find(
     (p: any) => p.playerId === player.playerId
   );
-
-  useEffect(() => {
-    setEditableReport(report ?? '');
-  }, [report, player.playerId]);
 
   return (
     <div className="player-profile">
@@ -144,101 +162,69 @@ function PlayerProfile({
         <thead>
           <tr>
             <th>Date</th>
-            <th className="tool-tips">
-              <Tooltip title="Time Played (Minutes)" arrow>
+            <th>
+              <Tooltip title="Minutes">
                 <span>MIN</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="Points" arrow>
+            <th>
+              <Tooltip title="Points">
                 <span>PTS</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="Field Goals Made" arrow>
+            <th>
+              <Tooltip title="FGM">
                 <span>FGM</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="Field Goal Attempts" arrow>
+            <th>
+              <Tooltip title="FGA">
                 <span>FGA</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="Field Goal Percent" arrow>
+            <th>
+              <Tooltip title="FG%">
                 <span>FG%</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="3 Points Made" arrow>
+            <th>
+              <Tooltip title="3PM">
                 <span>3PM</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="3 Point Attempts" arrow>
+            <th>
+              <Tooltip title="3PA">
                 <span>3PA</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="3 Point Percent" arrow>
+            <th>
+              <Tooltip title="3P%">
                 <span>3P%</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="Free Throws Made" arrow>
+            <th>
+              <Tooltip title="FTM">
                 <span>FTM</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="Free Throw Attempts" arrow>
+            <th>
+              <Tooltip title="FTA">
                 <span>FTA</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="Free Throw Percent" arrow>
+            <th>
+              <Tooltip title="FT%">
                 <span>FT%</span>
               </Tooltip>
             </th>
-            <th className="tool-tips">
-              <Tooltip title="Offensive Rebounds" arrow>
-                <span>OREB</span>
-              </Tooltip>
-            </th>
-            <th className="tool-tips">
-              <Tooltip title="Defensive Rebounds" arrow>
-                <span>DREB</span>
-              </Tooltip>
-            </th>
-            <th className="tool-tips">
-              <Tooltip title="Rebounds" arrow>
-                <span>REB</span>
-              </Tooltip>
-            </th>
-            <th className="tool-tips">
-              <Tooltip title="Assists" arrow>
-                <span>AST</span>
-              </Tooltip>
-            </th>
-            <th className="tool-tips">
-              <Tooltip title="Steals" arrow>
-                <span>STL</span>
-              </Tooltip>
-            </th>
-            <th className="tool-tips">
-              <Tooltip title="Blocks" arrow>
-                <span>BLK</span>
-              </Tooltip>
-            </th>
-            <th className="tool-tips">
-              <Tooltip title="Turnovers" arrow>
-                <span>TOV</span>
-              </Tooltip>
-            </th>
-            <th className="tool-tips">
-              <Tooltip title="Personal Fouls" arrow>
-                <span>PF</span>
-              </Tooltip>
-            </th>
+            <th>OREB</th>
+            <th>DREB</th>
+            <th>REB</th>
+            <th>AST</th>
+            <th>STL</th>
+            <th>BLK</th>
+            <th>TOV</th>
+            <th>PF</th>
           </tr>
         </thead>
         <tbody>
@@ -270,7 +256,6 @@ function PlayerProfile({
               <td>{log.pf}</td>
             </tr>
           ))}
-
           {averages && (
             <tr className="average-row">
               <td>
@@ -317,7 +302,7 @@ function PlayerProfile({
           <button
             className="action-button"
             style={{ backgroundColor: 'green', color: 'white' }}
-            onClick={() => setIsEditing(false)}
+            onClick={handleSave}
           >
             Save Report
           </button>
