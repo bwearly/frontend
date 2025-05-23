@@ -48,3 +48,21 @@
   color: #ffffff;
   font-weight: bold;
 }
+
+.add-report-button {
+  margin-top: auto;
+  margin-bottom: 3rem;
+  margin-inline: 1rem;
+  padding: 0.75rem;
+  background-color: rgb(49, 50, 63);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+}
+
+.add-report-button:hover {
+  background-color: #272936;
+}

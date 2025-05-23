@@ -18,6 +18,7 @@ export default function Navigation() {
         <img src="/dallas_mavericks.png" alt="Mavs Logo" className="logo-img" />
         <span>Draft Board</span>
       </div>
+
       <ul className="nav-list">
         {navItems.map(({ label, path }) => (
           <li key={path}>
@@ -32,6 +33,13 @@ export default function Navigation() {
           </li>
         ))}
       </ul>
+
+      <button
+        className="add-report-button"
+        onClick={() => navigate('/scoutReports')}
+      >
+        + Add Report
+      </button>
     </div>
   );
 }
