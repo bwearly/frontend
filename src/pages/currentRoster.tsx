@@ -1,13 +1,12 @@
 import '../App.css';
 import '../css/currentRoster.css';
 
-function currentRoster() {
+function CurrentRoster() {
   return (
-    <>
-      <div className="main-content-with-bg">
-        <div className="background-logo" />
-        <h1 className="branding">Current Roster</h1>
-        <div className="main-content-inner"></div>
+    <div className="main-content-with-bg">
+      <div className="background-logo" />
+      <h1 className="branding">Current Roster</h1>
+      <div className="main-content-inner">
         <div className="roster-container">
           <table className="mavs-roster">
             <thead>
@@ -159,11 +158,11 @@ function currentRoster() {
               </tr>
             </tbody>
           </table>
+          <p className="free-agent-note">* Indicates Free Agent</p>
         </div>
-        <p className="free-agent-note">* Indicates Free Agent</p>
       </div>
-    </>
+    </div>
   );
 }
 
-export default currentRoster;
+export default CurrentRoster;

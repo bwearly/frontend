@@ -34,9 +34,8 @@
 }
 
 .free-agent-note {
-  margin-top: 1rem;
-  font-size: 0.9rem;
+  padding-left: 16px;
+  padding-top: 1rem;
   font-style: italic;
   color: #ccc;
-  text-align: left;
 }

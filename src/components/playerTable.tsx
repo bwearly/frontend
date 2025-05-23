@@ -6,27 +6,37 @@ import '../css/playerTable.css';
 import defaultImg from '../assets/default.png';
 import { useScoutingReports } from '../utils/ScoutingReportContext';
 
-interface PlayerTableProps {
-  onSelectPlayer: (player: PlayerBio) => void;
-}
-
 const formatHeight = (inches: number) => {
   const feet = Math.floor(inches / 12);
   const remainder = inches % 12;
   return `${feet}'${remainder}"`;
 };
 
-function PlayerTable({ onSelectPlayer }: PlayerTableProps) {
+function PlayerTable() {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
   const { scoutingReports } = useScoutingReports();
 
-  const toggleExpand = (player: PlayerBio) => {
-    const id = player.playerId.toString();
-    setExpandedRow((prev) => (prev === id ? null : id));
-
-    if (expandedRow !== id) {
-      onSelectPlayer(player);
+  const scrollToScoutRow = (playerId: string) => {
+    const el = document.getElementById(`player-${playerId}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('highlight-scroll');
+      setTimeout(() => el.classList.remove('highlight-scroll'), 1500);
     }
+  };
+
+  const toggleExpand = (player: PlayerBio) => {
+    const playerId = player.playerId.toString();
+
+    setExpandedRow((prev) => {
+      const isExpanding = prev !== playerId;
+
+      if (isExpanding) {
+        setTimeout(() => scrollToScoutRow(playerId), 0);
+      }
+
+      return isExpanding ? playerId : null;
+    });
   };
 
   const players = playerData.bio;
@@ -76,7 +86,11 @@ function PlayerTable({ onSelectPlayer }: PlayerTableProps) {
                 </tr>
 
                 {isExpanded && (
-                  <tr key={id + '-details'} className="player-details-row">
+                  <tr
+                    key={id + '-details'}
+                    id={`player-${id}`} // 🔑 anchor row
+                    className="player-details-row"
+                  >
                     <td colSpan={4}>
                       <div className="scouting-card">
                         <div className="scouting-left">

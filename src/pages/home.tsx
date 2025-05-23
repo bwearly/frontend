@@ -57,7 +57,7 @@ function Home() {
         <div className="main-content-wrapper">
           <div className="main-content-body">
             <div className="left-column">
-              <PlayerTable onSelectPlayer={setSelectedPlayer} />
+              <PlayerTable />
               {selectedPlayer && (
                 <PlayerProfile
                   player={selectedPlayer}

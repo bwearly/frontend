@@ -114,3 +114,19 @@
   background-color: #1d1f2b;
   color: white;
 }
+
+.highlight-scroll {
+  animation: flash-border 1.5s ease-in-out;
+}
+
+@keyframes flash-border {
+  0% {
+    box-shadow: 0 0 0 2px rgb(17, 0, 255);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgb(103, 91, 173);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
