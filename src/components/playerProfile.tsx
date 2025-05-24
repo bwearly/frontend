@@ -163,7 +163,7 @@ function PlayerProfile({
           <tr>
             <th>Date</th>
             <th>
-              <Tooltip title="Minutes">
+              <Tooltip title="Minutes Played">
                 <span>MIN</span>
               </Tooltip>
             </th>
@@ -173,58 +173,90 @@ function PlayerProfile({
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="FGM">
+              <Tooltip title="Feild Goals Made">
                 <span>FGM</span>
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="FGA">
+              <Tooltip title="Feild Goal Attempts">
                 <span>FGA</span>
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="FG%">
+              <Tooltip title="Feild Goal Percentage">
                 <span>FG%</span>
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="3PM">
+              <Tooltip title="Three-Points Made">
                 <span>3PM</span>
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="3PA">
+              <Tooltip title="Three-Point Attempts">
                 <span>3PA</span>
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="3P%">
+              <Tooltip title="Three-Point Percentage">
                 <span>3P%</span>
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="FTM">
+              <Tooltip title="Free Throws Made">
                 <span>FTM</span>
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="FTA">
+              <Tooltip title="Free Throws Attempted">
                 <span>FTA</span>
               </Tooltip>
             </th>
             <th>
-              <Tooltip title="FT%">
+              <Tooltip title="Free Throw Percentage">
                 <span>FT%</span>
               </Tooltip>
             </th>
-            <th>OREB</th>
-            <th>DREB</th>
-            <th>REB</th>
-            <th>AST</th>
-            <th>STL</th>
-            <th>BLK</th>
-            <th>TOV</th>
-            <th>PF</th>
+            <th>
+              <Tooltip title="Offensive Rebound">
+                <span>OREB</span>
+              </Tooltip>
+            </th>
+            <th>
+              <Tooltip title="Defensive Rebound">
+                <span>DREB</span>
+              </Tooltip>
+            </th>
+            <th>
+              <Tooltip title="Rebound">
+                <span>REB</span>
+              </Tooltip>
+            </th>
+            <th>
+              <Tooltip title="Assist">
+                <span>AST</span>
+              </Tooltip>
+            </th>
+            <th>
+              <Tooltip title="Steal">
+                <span>STL</span>
+              </Tooltip>
+            </th>
+            <th>
+              <Tooltip title="Block">
+                <span>BLK</span>
+              </Tooltip>
+            </th>
+            <th>
+              <Tooltip title="Turnover">
+                <span>TOV</span>
+              </Tooltip>
+            </th>
+            <th>
+              <Tooltip title="Personal Foul">
+                <span>PF</span>
+              </Tooltip>
+            </th>
           </tr>
         </thead>
         <tbody>

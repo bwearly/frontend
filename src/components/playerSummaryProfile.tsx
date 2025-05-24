@@ -4,6 +4,7 @@ import type { GameAverages } from '../types/GameAverages';
 import '../css/playerProfile.css';
 import defaultImg from '../assets/default.png';
 import playerData from '../api/PlayerData.json';
+import { Tooltip } from '@mui/material';
 
 const formatHeight = (inches: number) => {
   const feet = Math.floor(inches / 12);
@@ -152,15 +153,44 @@ function PlayerSummaryProfile({
           <table className="averages-summary-table">
             <thead>
               <tr className="averages-summery-row">
-                <th>MIN</th>
-                <th>PTS</th>
-                <th>FGM</th>
-                <th>FGA</th>
-                <th>FG%</th>
-                <th>3PM</th>
-                <th>3PA</th>
+                <th>
+                  <Tooltip title="Minutes Played" arrow>
+                    <span>MIN</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Points Per Game" arrow>
+                    <span>PTS</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Field Goals Made" arrow>
+                    <span>FGM</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Field Goals Attempted" arrow>
+                    <span>FGA</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Field Goal Percentage" arrow>
+                    <span>FG%</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Three-Point Makes" arrow>
+                    <span>3PM</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Three-Point Attempts" arrow>
+                    <span>3PA</span>
+                  </Tooltip>
+                </th>
               </tr>
             </thead>
+
             <tbody>
               <tr>
                 <td>{averages.timePlayed.split(':')[0]}</td>
@@ -186,16 +216,49 @@ function PlayerSummaryProfile({
           <table className="averages-summary-table">
             <thead>
               <tr className="averages-summery-row">
-                <th>3P%</th>
-                <th>FTM</th>
-                <th>FTA</th>
-                <th>FT%</th>
-                <th>REB</th>
-                <th>AST</th>
-                <th>STL</th>
-                <th>BLK</th>
+                <th>
+                  <Tooltip title="Three-Point Percentage" arrow>
+                    <span>3P%</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Free Throws Made" arrow>
+                    <span>FTM</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Free Throws Attempted" arrow>
+                    <span>FTA</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Free Throw Percentage" arrow>
+                    <span>FT%</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Rebound" arrow>
+                    <span>REB</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Assist" arrow>
+                    <span>AST</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Steal" arrow>
+                    <span>STL</span>
+                  </Tooltip>
+                </th>
+                <th>
+                  <Tooltip title="Block" arrow>
+                    <span>BLK</span>
+                  </Tooltip>
+                </th>
               </tr>
             </thead>
+
             <tbody>
               <tr>
                 <td
